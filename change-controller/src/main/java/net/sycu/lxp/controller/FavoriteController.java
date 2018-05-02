@@ -76,7 +76,7 @@ public class FavoriteController {
 	@ResponseBody
 	public Map<String, String> getFavoritesInfo(HttpServletRequest request,@RequestBody Favorites favorites) {
 		Map<String, String> msgMap = new HashMap<String, String> ();
-		String message = Constant.FavoritesConstansts.IS_NOT_COLLECT;
+		String message = Constant.FavoritesConstants.IS_NOT_COLLECT;
 		String favoritesId = "";
 		User user = (User) request.getSession().getAttribute(Constant.CURRENT_USER);
 		if(user != null) {
@@ -84,7 +84,7 @@ public class FavoriteController {
 		}
 		List<Favorites> favoritesList = favoritesService.getFavorites(favorites);
 		if (favoritesList != null && favoritesList.size() > 0) {
-			message = Constant.FavoritesConstansts.IS_COLLECT;
+			message = Constant.FavoritesConstants.IS_COLLECT;
 			favoritesId = favoritesList.get(0).getId();
 		}
 		msgMap.put("status", message);
