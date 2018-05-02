@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../iconfont/iconfont.css">
+    <link rel="stylesheet" href="../libs/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">用户管理系统</div>
+            <ul class="layui-nav user-login" id="userLogin">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="userLoginAccount"></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" id="changeUserInfo">修改信息</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;" id="logout">退出登录</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">系统用户</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;" id="averageUser">普通用户</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;" id="goosEdit">商品列表</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;" id="log">商品列表</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body user-table">
+            <!-- 内容主体区域 -->
+            <!-- <div style="padding: 15px;">内容主体区域</div> -->
+            <div class="demoTable layui-clear">
+                账号：
+                <div class="layui-inline">
+                    <input class="layui-input" name="account" id="accountReload" autocomplete="off">
+                </div>
+                用户名：
+                <div class="layui-inline">
+                    <input class="layui-input" name="userName" id="userNameReload" autocomplete="off">
+                </div>
+                <button class="layui-btn" data-type="reload" id="searchBtn">搜索</button>
+                <button class="layui-btn layui-btn-danger" id="deleteUsers">批量删除</button>
+                <button class="layui-btn" id="addUser">新增</button>
+            </div>
+            <table id="datalist" lay-filter="tableBtn"></table>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            lxp
+        </div>
+    </div>
+    <div style="display: none;" id="tableBox" class="template-box"></div>
+</body>
+
+<script type="text/html" id="tableBtn">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<!-- 详情面板 -->
+<script type="text/html" id="tableDetail">
+    <table class="layui-table">
+        {{# layui.each(d, function(index, item){ }}
+        <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.val }}</td>
+        </tr>
+        {{# }); }}
+    </table>
+</script>
+
+<!-- 新增和编辑面板 -->
+<script type="text/html" id="tableEdit">
+    <table class="layui-table">
+        {{# layui.each(d, function(index, item){ }}
+        <tr>
+            <td>{{ item.title }}</td>
+            <td>
+                <input type="text" data-type="{{item.field}}" value="{{ item.val }}" class="{{item.className}}">
+            </td>
+        </tr>
+        {{# }); }}
+    </table>
+</script>
+<script src="../libs/layui/layui.all.js"></script>
+<script src="../js/ServerUtil.js"></script>
+<script src="../js/admin/admin.js"></script>
+
+</html>

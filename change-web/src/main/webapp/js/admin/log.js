@@ -6,10 +6,10 @@ layui.use(['table'], function () {
     var laytpl = layui.laytpl;
     var element = layui.element;
     var tableTitle = {
-        name: '标题',
-        description: '描述',
-        creatorId: '卖家ID',
-        imagesSrc: '图片路径'
+        userName: '用户名',
+        userAccount: '账号',
+        operateTime: '操作时间',
+        operateType: '操作类型'
     };
     var userTitle = {
         account: '账号',
@@ -72,7 +72,7 @@ layui.use(['table'], function () {
     table.render({
         elem: '#datalist',
         // height: 315,
-        url: window.location.origin + '/change-web/goods/goodsAllList',
+        url: window.location.origin + '/change-web/operate/getOperateList',
         method: 'post',
         response: {
             statusCode: 1,
@@ -97,20 +97,20 @@ layui.use(['table'], function () {
                     type: 'checkbox'
                 },
                 {
-                    field: 'name',
-                    title: '标题',
+                    field: 'userName',
+                    title: '用户名',
                     // width: 150
                 }, {
-                    field: 'description',
-                    title: '描述',
+                    field: 'userAccount',
+                    title: '账号',
                     // width: 200
                 }, {
-                    field: 'creatorId',
-                    title: '卖家ID',
+                    field: 'operateTime',
+                    title: '操作时间',
                     // width: 150
                 }, {
-                    field: 'imagesSrc',
-                    title: '图片路径',
+                    field: 'operateType',
+                    title: '操作类型',
                     // width: 150
                 }, {
                     fixed: 'right',
@@ -166,7 +166,7 @@ layui.use(['table'], function () {
             layer.confirm('真的删除么', {
                 skin: 'layui-layer-molv'
             }, function (index) {
-                ServerUtil.api('change-web/goods/', 'delete', {
+                ServerUtil.api('change-web/operate/', 'delete', {
                     ids: data.id
                 }, function () {
                     // obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
@@ -181,8 +181,10 @@ layui.use(['table'], function () {
     $('#searchBtn').on('click', function () {
         // var type = $(this).data('type');
         var obj = {};
-        var name = $('#accountReload').val();
-        obj.name = name;
+        var userAccount = $('#accountReload').val();
+        var userName = $('#userNameReload').val();
+        obj.userAccount = userAccount;
+        obj.userName = userName;
         tableReload(obj);
     });
     //批量删除
@@ -199,7 +201,7 @@ layui.use(['table'], function () {
                 userIdsArr.push(val.id);
             });
             var userIdsStr = userIdsArr.join(',');
-            ServerUtil.api('change-web/goods/', 'delete', {
+            ServerUtil.api('change-web/operate/', 'delete', {
                 ids: userIdsStr
             }, function () {
                 layer.close(index);
@@ -215,7 +217,7 @@ layui.use(['table'], function () {
     $('#averageUser').on('click', function () {
         window.location.href = window.location.origin + window.location.pathname + '?userType=2';
     });
-    $('#log').on('click', function () {
-        window.location.href = window.location.origin + window.location.pathname + '?userType=4';
+    $('#goosEdit').on('click', function () {
+        window.location.href = window.location.origin + window.location.pathname + '?userType=3';
     });
 });

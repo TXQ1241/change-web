@@ -230,4 +230,7 @@ layui.use(['table'], function () {
     $('#goosEdit').on('click', function () {
         window.location.href = window.location.origin + window.location.pathname + '?userType=3';
     });
+    $('#log').on('click', function () {
+        window.location.href = window.location.origin + window.location.pathname + '?userType=4';
+    });
 });
