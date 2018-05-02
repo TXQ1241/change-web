@@ -28,6 +28,7 @@ public class Constant {
     	String ID_ATTR = "id";
     	String USER_ID_ATTR = "userId";
     	String GOODS_ID_ATTR = "goodsId";
+    	String ACCOUNT_ATTR = "account";
     }
     
     /**
@@ -96,6 +97,8 @@ public class Constant {
         String SYSTEM_USER = "1"; //系统用户
         String GENERAL_USER = "2"; //普通用户
         String GOODS_PAGE = "3";//商品页面
+        String OPERATE_PAGE_LOGIN = "4"; //登陆页面
+        String OPERATE_PAGE_CHANGE = "5";//修改密码
         
     }
     
@@ -136,13 +139,29 @@ public class Constant {
      * @author lxp
      *
      */
-    public interface FavoritesConstansts {
+    public interface FavoritesConstants {
     	
     	/**
     	 * 收藏状态
     	 */
     	String IS_COLLECT = "0";//已收藏
     	String IS_NOT_COLLECT = "1";//未收藏
+    	
+    }
+    
+    /**
+     * 操作日志常量
+     * @author lxp
+     *
+     */
+    public interface OperateConstants {
+    	
+    	/**
+    	 * 操作类型
+    	 */
+    	String OPERATE_LOGIN = "1";//登陆
+    	String OPERATE_CHANGE_PSW = "2";//修改密码
+    	
     	
     }
 

@@ -40,6 +40,10 @@ public class UserController {
             page = "systemUser";
         } else if(userType != null && Constant.UserConstants.GOODS_PAGE.equals(userType)) {
         	page = "goodsEdit";
+        } else if(userType != null && Constant.UserConstants.OPERATE_PAGE_LOGIN.equals(userType)) {
+        	page = "loginLog";
+        } else if(userType != null && Constant.UserConstants.OPERATE_PAGE_CHANGE.equals(userType)) {
+        	page = "passwordChangeLog";        			
         }
         return page;
     }
@@ -165,7 +169,7 @@ public class UserController {
      **/
     @RequestMapping("changePassword")
     @ResponseBody
-    public Map<String, String> changePassword(@RequestBody User user) {   	
+    public Map<String, String> changePassword(HttpServletRequest request, @RequestBody User user) {   	
     	Map<String, String> msgMap = new HashMap<String, String>();
     	String status = Constant.AjaxStatus.AJAX_SUCCESS;
     	String msg = "修改密码成功";
@@ -176,6 +180,7 @@ public class UserController {
 	    		userInfo = userList.get(0);
 	        	userInfo.setPassword(user.getPassword());
 	        	userService.update(userInfo);
+	        	request.getSession().setAttribute(Constant.CURRENT_USER, null);
 	    	}else {
 	    		status = Constant.AjaxStatus.AJAX_FAIL;
 	    		msg = "当前用户不存在，请联系管理员";
