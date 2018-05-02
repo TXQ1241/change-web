@@ -44,16 +44,6 @@
 		<mvc:mapping path="/user/view"/>
 		<bean class="net.sycu.lxp.base.EncapsulationContext"></bean>
 		</mvc:interceptor>
-		<!-- 登陆拦截 -->
-		<mvc:interceptor>
-		<mvc:mapping path="/login/login"/>
-		<bean class="net.sycu.lxp.base.LoginInterception"></bean>
-		</mvc:interceptor>
-		<!-- 修改密码拦截 -->
-		<mvc:interceptor>
-		<mvc:mapping path="/user/changePassword"/>
-		<bean class="net.sycu.lxp.base.ChangInterception"></bean>
-		</mvc:interceptor>
 	</mvc:interceptors>
 	
 </beans>
