@@ -8,8 +8,7 @@ layui.use(['table'], function () {
     var tableTitle = {
         userName: '用户名',
         userAccount: '账号',
-        operateTime: '操作时间',
-        operateType: '操作类型'
+        operateTime: '操作时间'
     };
     var userTitle = {
         account: '账号',
@@ -84,6 +83,9 @@ layui.use(['table'], function () {
             page: 0,
             limit: 10
         },
+        where: {
+            operateType: '1'
+        },
         page: {
             limits: [5, 10, 20, 50, 100]
         },
@@ -107,10 +109,6 @@ layui.use(['table'], function () {
                 }, {
                     field: 'operateTime',
                     title: '操作时间',
-                    // width: 150
-                }, {
-                    field: 'operateType',
-                    title: '操作类型',
                     // width: 150
                 }, {
                     fixed: 'right',
@@ -219,5 +217,8 @@ layui.use(['table'], function () {
     });
     $('#goosEdit').on('click', function () {
         window.location.href = window.location.origin + window.location.pathname + '?userType=3';
+    });
+    $('#passworkChangeLog').on('click', function () {
+        window.location.href = window.location.origin + window.location.pathname + '?userType=5';
     });
 });

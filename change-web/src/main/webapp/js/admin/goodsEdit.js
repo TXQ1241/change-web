@@ -215,7 +215,10 @@ layui.use(['table'], function () {
     $('#averageUser').on('click', function () {
         window.location.href = window.location.origin + window.location.pathname + '?userType=2';
     });
-    $('#log').on('click', function () {
+    $('#loginLog').on('click', function () {
         window.location.href = window.location.origin + window.location.pathname + '?userType=4';
+    });
+    $('#passworkChangeLog').on('click', function () {
+        window.location.href = window.location.origin + window.location.pathname + '?userType=5';
     });
 });
