@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.sycu.lxp.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="net.sycu.lxp.pojo.Goods" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="images_src" property="imagesSrc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, description, creator_id, create_time, update_user_id, update_time, is_deleted, 
+    images_src
+  </sql>
+  <!-- 获取商品脚本 -->
+  <sql id="Get_Goods_Sql">
+     <if test="name != null and name != ''">
+         g.name like '%${name}%'
+     </if>
+	 <if test="goodsType != null and goodsType != '' and goodsType != '1'.toString()" >
+	   		g.creator_id = #{creatorId}
+	 </if>
+      and g.is_deleted != -1
+  </sql>
+  
+  <!-- 通过商品类型获取商品脚本 -->
+  <sql id="Get_Goods_Category_Sql">
+  	from goods g where g.id in 
+	   	(select gc.goods_id from goods_category gc 
+	   	where gc.category_id = #{id})
+  </sql>
+  
+  <!-- 保存商品信息 -->
+  <insert id="insert" parameterType="net.sycu.lxp.pojo.Goods" >
+    insert into goods (id, name, description, 
+      creator_id, create_time, update_user_id, 
+      update_time, is_deleted, images_src
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{creatorId,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{updateUserId,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=DATE}, #{isDeleted,jdbcType=INTEGER}, #{imagesSrc,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <!-- 更新商品信息 -->
+  <update id="updateByGoodsSelective" parameterType="net.sycu.lxp.pojo.Goods">
+  	    update goods
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+ 	<!-- 通过商品对象获取商品列表 -->										
+ 	<select id="getGoodsList" resultMap="BaseResultMap"  parameterType="net.sycu.lxp.vo.GoodsVo" >
+     select *
+     from goods g
+     <where>
+     	<include refid="Get_Goods_Sql"></include>
+     </where>
+     limit #{pageNum},#{pageSize}
+ 	</select>
+
+   <!-- 通过商品对象获取商品 -->									   
+   <select id="getGoods" resultMap="BaseResultMap" parameterType="net.sycu.lxp.pojo.Goods" >
+       select *
+       from goods g
+       <where>
+           <if test="id != null and id != ''">
+               and g.id = #{id}
+           </if>
+               and g.is_deleted != -1
+       </where>
+   </select>
+   
+   <!-- 通过商品类型获取商品信息 -->
+   <select id="getGoodsByCategory" resultMap="BaseResultMap" parameterType="net.sycu.lxp.vo.GoodsVo">
+	   	select * 
+	   	<include refid="Get_Goods_Category_Sql"></include>
+	   	limit #{pageNum},#{pageSize}
+   </select>
+   
+   <!-- 查询商品记录的总条数 -->
+   <select id="getGoodsCount" resultType="java.lang.Integer" parameterType="net.sycu.lxp.vo.GoodsVo" >
+       select count(*)
+       from goods g
+       <where>
+		<include refid="Get_Goods_Sql"></include>
+       </where>
+   </select>
+   
+   <!-- 通过商品类型获取商品记录数 -->
+   <select id="getGoodsCountByCategory" resultType="java.lang.Integer" parameterType="net.sycu.lxp.vo.GoodsVo" >
+   	   	select count(*) 
+	   	<include refid="Get_Goods_Category_Sql"></include>
+   </select>
+
+   <!-- 批量删除商品 -->
+   <update id="deleteGoodsByIds" parameterType="java.lang.String">
+       update goods g set g.is_deleted = -1
+       <where>
+           g.id in 
+           <foreach collection="array" item="id" separator="," open="(" close=")">
+               #{id}
+           </foreach>
+       </where>
+   </update>
+  
+</mapper>

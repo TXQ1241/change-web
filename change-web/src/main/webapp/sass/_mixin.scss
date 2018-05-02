@@ -1,0 +1,22 @@
+@mixin transform($transform){
+    transform:$transform;
+    -ms-transform:$transform; 	/* IE 9 */
+    -moz-transform:$transform; 	/* Firefox */
+    -webkit-transform:$transform; /* Safari 和 Chrome */
+    -o-transform:$transform; 	/* Opera */
+}
+
+@mixin placeholder($color){
+    &::-ms-input-placeholder {
+        color: $color;
+    } 	/* IE 9 */
+    &::-moz-input-placeholder {
+        color: $color;
+    } 	/* Firefox */
+    &::-webkit-input-placeholder {
+        color: $color;
+    } /* Safari 和 Chrome */
+    &::-o-input-placeholder {
+        color: $color;
+    } 	/* Opera */
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.sycu.lxp.dao.GoodsCategoryMapper" >
+  <resultMap id="BaseResultMap" type="net.sycu.lxp.pojo.GoodsCategory" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="attr1" property="attr1" jdbcType="VARCHAR" />
+    <result column="attr2" property="attr2" jdbcType="VARCHAR" />
+    <result column="attr3" property="attr3" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 保存关联关系 -->
+  <insert id="insert" parameterType="net.sycu.lxp.pojo.GoodsCategory" >
+    insert into goods_category (id, goods_id, category_id, 
+      is_deleted, attr1, attr2, 
+      attr3)
+    values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=INTEGER}, #{attr1,jdbcType=VARCHAR}, #{attr2,jdbcType=VARCHAR}, 
+      #{attr3,jdbcType=VARCHAR})
+  </insert>
+  
+  <!-- 删除关联关系 -->
+  <update id="deleteGoodsCateByGoodsId" parameterType="java.lang.String" >
+  	update goods_category gc
+  	<where>
+  		gc.goods_id = #{goodsId}
+  	</where>
+  	set gc.is_deleted = -1
+  </update>
+</mapper>

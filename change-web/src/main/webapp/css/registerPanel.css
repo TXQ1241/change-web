@@ -1,0 +1,99 @@
+@charset "UTF-8";
+.register-panel {
+  padding-top: 20px; }
+  .register-panel .logo-content {
+    width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 20px; }
+    .register-panel .logo-content .logo-box .text-img {
+      margin-left: 20px; }
+      .register-panel .logo-content .logo-box .text-img span {
+        line-height: 34px;
+        font-size: 24px;
+        color: #333;
+        padding-left: 20px;
+        vertical-align: bottom; }
+      .register-panel .logo-content .logo-box .text-img img {
+        vertical-align: bottom; }
+    .register-panel .logo-content .logo-box .right-text {
+      margin-top: 40px; }
+  .register-panel .line {
+    height: 1px;
+    background-color: #999999; }
+  .register-panel .main-box {
+    width: 400px;
+    margin: 20px auto;
+    border-bottom: 1px solid #dddddd; }
+    .register-panel .main-box .main-content {
+      margin: 0 auto; }
+      .register-panel .main-box .main-content .user .input-box {
+        width: 400px;
+        height: 90px;
+        position: relative; }
+        .register-panel .main-box .main-content .user .input-box .label {
+          display: inline-block;
+          width: 110px;
+          height: 52px;
+          line-height: 52px;
+          padding: 0;
+          padding-left: 20px;
+          border: 1px solid #dddddd;
+          border-right: 0 none;
+          font-size: 14px;
+          border-radius: 0;
+          color: #666;
+          font-weight: normal; }
+        .register-panel .main-box .main-content .user .input-box input {
+          width: 290px;
+          border: 1px solid #dddddd;
+          border-left: 0 none;
+          height: 52px;
+          padding-left: 20px;
+          /* IE 9 */
+          /* Firefox */
+          /* Safari 和 Chrome */
+          /* Opera */ }
+          .register-panel .main-box .main-content .user .input-box input::-ms-input-placeholder {
+            color: #cccccc; }
+          .register-panel .main-box .main-content .user .input-box input::-moz-input-placeholder {
+            color: #cccccc; }
+          .register-panel .main-box .main-content .user .input-box input::-webkit-input-placeholder {
+            color: #cccccc; }
+          .register-panel .main-box .main-content .user .input-box input::-o-input-placeholder {
+            color: #cccccc; }
+        .register-panel .main-box .main-content .user .input-box .tip {
+          margin-top: 5px;
+          font-size: 12px;
+          color: #cccccc; }
+          .register-panel .main-box .main-content .user .input-box .tip p {
+            display: inline-block;
+            margin-left: 5px;
+            color: #cccccc; }
+        .register-panel .main-box .main-content .user .input-box .error_tip {
+          position: absolute;
+          font-size: 14px;
+          top: 15px;
+          left: 420px;
+          color: #e4393c;
+          width: 300px; }
+      .register-panel .main-box .main-content .user .submit-btn {
+        width: 100%;
+        background-color: #e4393c;
+        font-size: 18px;
+        color: #fff;
+        padding: 10px 0;
+        cursor: pointer; }
+      .register-panel .main-box .main-content .right-box {
+        height: 500px;
+        border-left: 1px solid #dddddd;
+        margin-left: 100px;
+        padding-left: 90px; }
+        .register-panel .main-box .main-content .right-box .other {
+          width: 160px;
+          padding: 20px 0;
+          border-bottom: 1px solid #dddddd; }
+          .register-panel .main-box .main-content .right-box .other a {
+            display: inline-block;
+            vertical-align: middle; }
+            .register-panel .main-box .main-content .right-box .other a span {
+              font-size: 14px; }

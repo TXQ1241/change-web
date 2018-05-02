@@ -1,0 +1,55 @@
+@import 'default';
+@import 'mixin';
+
+#deleteUsers {
+    float: right;
+}
+
+#addUser {
+    float: right;
+}
+
+.user-table {
+    padding: 15px;
+}
+
+.user-login {
+    display: none;
+}
+
+.template-box {
+    padding: 0 15px;
+
+    table {
+        tr {
+            &:hover {
+                background-color: #fff;
+            }
+
+            td {
+                input {
+                    width: 200px;
+                }
+            }
+        }
+    }
+}
+
+body {
+    .layer-btn-class {
+        .layui-layer-btn {
+            .layui-layer-btn1 {
+                background-color: #fff;
+            }
+        }
+    }
+}
+
+.layui-header {
+    position: relative;
+
+    .layui-nav {
+        position: absolute;
+        right: 40px;
+    }
+}

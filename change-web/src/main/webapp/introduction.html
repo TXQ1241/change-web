@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>商品页面</title>
+	<link rel="stylesheet" href="./libs/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./libs/layui/css/layui.css">
+	<link href="./libs/css/amazeui.css" rel="stylesheet" type="text/css" />
+	<link href="./css/index.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="./iconfont/iconfont.css">
+	<link href="./css/demo.css" rel="stylesheet" />
+	<link type="text/css" href="./css/optstyle.css" rel="stylesheet" />
+	<link type="text/css" href="./css/style.css" rel="stylesheet" />
+
+
+	<style>
+		.description {
+			border: 1px solid #dedede;
+			width: 700px;
+			height: 258px;
+			line-height: 18px;
+			font-size: 16px;
+			color: #999999;
+			margin-top: 10px;
+			padding: 10px;
+			overflow: auto;
+			word-break: break-all;
+		}
+
+		#userListBox li {
+			border: 1px solid #dedede;
+			margin-top: 20px;
+		}
+
+		.information {
+			padding: 5px 20px;
+			background-color: #f8f8f8;
+			text-align: left;
+		}
+
+		.information span {
+			margin-right: 10px;
+		}
+
+		.img-list {
+			text-align: left;
+			padding: 10px 20px;
+		}
+
+		.img-list img {
+			width: 50px;
+			height: 50px;
+			margin-right: 20px;
+		}
+
+		.show-img {
+			display: none;
+			padding: 10px;
+		}
+
+		.show-img img {
+			width: 200px;
+			height: 200px;
+		}
+
+		#userListBox li p {
+			width: 100%;
+			padding: 5px 10px;
+			word-break: break-all;
+			white-space: pre-warp;
+			text-align: left;
+		}
+
+		#userListBox li p.title {
+			font-weight: 700;
+		}
+
+		#userListBox .sellerChangeBtn {
+			padding: 5px 0;
+		}
+
+		#userListBox .sellerChangeBtn button {
+			padding: 5px 10px;
+			color: white;
+			background-color: #F03726;
+			margin-right: 20px;
+			font-size: 14px;
+			border: 0 none;
+			outline: none;
+		}
+
+		.am-tabs-bd .am-tab-panel {
+			padding: 0 0 10px;
+		}
+
+		.am-comment-main {
+			margin-left: 0;
+		}
+
+		/* 卖家信息 */
+
+		.seller_information ul li {
+			padding: 5px 10px;
+		}
+
+		.seller_information ul li .left {
+			width: 20%;
+		}
+
+		.seller_information ul li .right {
+			width: 80%;
+		}
+
+		/* 我要评论 */
+
+		.add_comment_box {
+			margin: 10px 0;
+			text-align: right;
+		}
+
+		#addComment {
+			padding: 5px 10px;
+			color: white;
+			background-color: #F03726;
+			font-size: 14px;
+			border: 0 none;
+			outline: none;
+		}
+
+		/* 我要交换 */
+
+		.upload_box {
+			padding: 20px;
+			box-sizing: border-box;
+		}
+
+		.upload_box div {
+			box-sizing: border-box;
+		}
+
+		.upload_box .box {
+			margin-bottom: 10px;
+		}
+
+		.upload_box input {
+			box-sizing: border-box;
+		}
+
+		.upload_box .left {
+			width: 20%;
+			font-size: 16px;
+		}
+
+		.upload_box .right {
+			width: 80%;
+		}
+
+		.upload_box .upload_title input {
+			width: 100%;
+			border-radius: 5px;
+			outline: none;
+			border: 1px solid #e0e0e0;
+			height: 30px;
+			vertical-align: baseline;
+		}
+
+		.upload_box .upload_title input:focus {
+			border: 1px solid #d2364c;
+		}
+
+		.upload_box .upload_category ul li {
+			border: 1px solid #e0e0e0;
+			width: 90px;
+			height: 35px;
+			line-height: 35px;
+			margin: 0 10px 10px 0;
+			text-align: center;
+			cursor: pointer;
+		}
+
+		.upload_box .upload_category ul li.active {
+			border: 1px solid #d2364c;
+		}
+
+		.upload_box .upload_description .description {
+			width: 100%;
+			height: 200px;
+			resize: none;
+			border: 1px solid #e0e0e0;
+			box-sizing: border-box;
+			padding: 10px;
+			outline: none;
+			border-radius: 5px;
+		}
+
+		.upload_box .upload_description .description:focus {
+			border: 1px solid #d2364c;
+		}
+
+		.upload_box .upload_img .img_box ul li {
+			width: 48px;
+			height: 48px;
+			position: relative;
+			margin-right: 10px;
+			display: none;
+		}
+
+		.upload_box .upload_img .img_box ul li img {
+			width: 48px;
+			height: 48px;
+			border: 1px solid #e0e0e0;
+		}
+
+		.upload_box .upload_img .img_box ul li span {
+			position: absolute;
+			background-color: rgb(245, 245, 245);
+			font-size: 14px;
+			font-weight: 700;
+			cursor: pointer;
+			padding: 3px;
+			border: 0 none;
+			border-radius: 5px;
+			top: 50%;
+			display: none;
+		}
+
+		.upload_box .upload_img .img_box ul li span:hover {
+			color: #d2364c;
+		}
+
+		.upload_box .upload_img .img_box ul li .see {
+			left: 25%;
+			transform: translate(-50%, -50%);
+		}
+
+		.upload_box .upload_img .img_box ul li .delete {
+			right: 25%;
+			transform: translate(50%, -50%);
+		}
+
+		.upload_box .upload_img .img_box .input_file {
+			display: none;
+		}
+
+		.upload_box .upload_img .upload_img_btn {
+			width: 48px;
+			height: 48px;
+			border: 1px solid #e0e0e0;
+			background: url(./images/bg-upload.png) no-repeat -2px -2px;
+			cursor: pointer;
+		}
+
+		.visit_img img {
+			width: 500px;
+			height: 500px;
+			border: 0 none;
+		}
+
+		.layui-layer-molv .layui-layer-title {
+			background-color: #d2364c !important;
+		}
+
+		.layui-layer-molv .layui-layer-btn a {
+			background: #F03726 !important;
+			border-color: #F03726 !important;
+		}
+
+		.layui-layer-molv .layui-layer-btn a {
+			background: #F03726 !important;
+			border-color: #F03726 !important;
+			color: white;
+		}
+
+		.layui-layer-close {
+			color: white;
+		}
+
+		.header .message-r {
+			display: none;
+		}
+
+
+		.upload_box .upload_description textarea {
+			width: 100%;
+			height: 200px;
+			resize: none;
+			border: 1px solid #e0e0e0;
+			box-sizing: border-box;
+			padding: 10px;
+			outline: none;
+			border-radius: 5px;
+		}
+
+		.upload_box .upload_description textarea:focus {
+			border: 1px solid #d2364c;
+		}
+
+		.item-inform {
+			margin-top: 10px;
+		}
+
+		#clearcontent .tb-booth {
+			overflow: hidden;
+		}
+
+		.introduceMain {
+			margin-top: 20px;
+			padding-bottom: 50px;
+		}
+
+		#collection {
+			position: absolute;
+			font-size: 25px;
+			cursor: pointer;
+			width: 23px;
+			height: 23px;
+			right: 6px;
+			top: 10px;
+		}
+
+		#collection.active {
+			color: #F03726;
+		}
+
+		#sellerInfomationBox {
+			position: relative;
+		}
+
+		#page .layui-box {
+			float: right;
+		}
+
+		#page {
+			margin-top: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<!--顶部导航条 -->
+	<div class="am-container header">
+		<ul class="message-l">
+			<div class="topMessage">
+				<div class="menu-hd">
+					<a href="./login.html" target="_top" class="h">亲，请登录</a>
+					<a href="./register.html" target="_top">免费注册</a>
+				</div>
+			</div>
+		</ul>
+		<ul class="message-r">
+			<div class="topMessage home">
+				<div class="menu-hd">
+					<a href="./index.html" target="_top" class="h">商城首页</a>
+				</div>
+			</div>
+			<div class="topMessage my-shangcheng">
+				<div class="menu-hd MyShangcheng">
+					<a href="./information.html" target="_top">
+						<i class="iconfont icon-gerenzhongxin"></i>个人中心</a>
+				</div>
+			</div>
+			<div class="topMessage mini-cart">
+				<div class="menu-hd">
+					<a id="mc-menu-hd" href="./shopcart.html" target="_top">
+						<i class="iconfont icon-gouwuche"></i>
+						<span>购物车</span>
+					</a>
+				</div>
+			</div>
+			<div class="topMessage favorite">
+				<div class="menu-hd">
+					<a href="./collection.html" target="_top">
+						<i class="iconfont icon-shoucangjia"></i>
+						<span>收藏夹</span>
+					</a>
+				</div>
+			</div>
+		</ul>
+	</div>
+
+	<!--悬浮搜索框-->
+
+	<div class="nav white">
+		<div class="search-bar pr">
+			<a name="index_none_header_sysc" href="#"></a>
+			<form>
+				<input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off">
+				<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
+			</form>
+		</div>
+	</div>
+
+	<div class="clear"></div>
+	<b class="line"></b>
+	<div class="listMain">
+
+		<!--分类-->
+		<div class="nav-table">
+			<div class="long-title">
+				<span class="all-goods">全部分类</span>
+			</div>
+			<div class="nav-cont">
+				<ul>
+					<li class="index">
+						<a href="./index.html">首页</a>
+					</li>
+					<li class="qc">
+						<a href="./search.html" id="sellerSrc">卖家中心</a>
+					</li>
+					<li class="qc">
+						<a href="./search.html">买家中心</a>
+					</li>
+					<li class="qc">
+						<a href="#">数据统计</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<!--放大镜-->
+
+		<div class="item-inform">
+			<div class="clearfixLeft" id="clearcontent">
+
+
+			</div>
+
+			<div class="clearfixRight" id="sellerInfomationBox">
+
+
+			</div>
+
+		</div>
+
+
+		<!-- introduce-->
+
+		<div class="introduce">
+			<div class="introduceMain" style="width: 1200px;">
+				<div class="am-tabs" data-am-tabs>
+
+
+				</div>
+
+			</div>
+		</div>
+
+		<div style="display: none;" id="uploadBox" class="upload_box">
+
+		</div>
+		<div style="display: none;" id="visitImg" class="visit_img">
+			<img src="" alt="">
+		</div>
+	</div>
+
+</body>
+<!-- 放大镜 -->
+<script type="text/html" id="fangdajing">
+	<div class="box">
+
+
+		<div class="tb-booth tb-pic tb-s310">
+			<a href="{{ d[0] }}">
+				<img src="{{ d[0] }}" alt="细节展示放大镜特效" rel="{{ d[0] }}" class="jqzoom" />
+			</a>
+		</div>
+		<ul class="tb-thumb" id="thumblist">
+			{{# layui.each(d, function(index, item){ }}
+			<li class="tb-selected">
+				<div class="tb-pic tb-s40">
+					<a>
+						<img src="{{ item }}" mid="{{ item }}" big="{{ item }}">
+					</a>
+				</div>
+			</li>
+			{{# }); }}
+		</ul>
+	</div>
+</script>
+<!-- 评价 -->
+<script type="text/html" id="userList">
+	<ul class="am-avg-sm-3 am-tabs-nav am-nav am-nav-tabs">
+		<li class="am-active">
+			<a href="#tab1">
+
+				<span class="index-needs-dt-txt">全部评价</span>
+			</a>
+
+		</li>
+		{{# if(d.goodsType == '2'){ }}
+		<li>
+			<a href="#tab2">
+
+				<span class="index-needs-dt-txt">交换列表</span>
+			</a>
+
+		</li>
+		{{# } }}
+	</ul>
+
+	<div class="am-tabs-bd">
+		<div class="am-tab-panel am-fade  am-in am-active" id="tab1">
+			<div class="clear"></div>
+			<ul id="userListBox">
+				{{# layui.each(d.conments, function(index, item){ }}
+				<li>
+					<div class="information">
+						<span>{{ item.userName }}</span>
+						<span>评论于</span>
+						<span>{{ item.createTimeStr }}</span>
+					</div>
+					<div class="img-list">
+						{{# layui.each(item.imagesSrc, function(index, imgSrc){ }}
+						<a>
+							<img src="{{ imgSrc }}" />
+						</a>
+						{{# }); }}
+					</div>
+					<div class="show-img">
+						<img src="" />
+					</div>
+					<p>{{ item.content }}</p>
+				</li>
+				{{# }); }}
+			</ul>
+			<div id="page"></div>
+			<div class="clear"></div>
+			<div class="add_comment_box">
+				<button id="addComment">我要评论</button>
+			</div>
+
+		</div>
+		{{# if(d.goodsType == '2'){ }}
+		<div class="am-tab-panel am-fade" id="tab2">
+			<ul id="userListBox">
+				{{# layui.each(d.userList, function(index, item){ }}
+				<li>
+					<div class="information">
+						<span>用户名：{{ item.userName }}</span>
+						<span>手机号：{{ item.phoneNum }}</span>
+						<span>邮箱：{{ item.email }}</span>
+					</div>
+					<div class="sellerChangeBtn clearfix">
+						<button class="changeNo pull-right" data-buyersId="{{ item.id }}">拒绝</button>
+						<button class="changeYes pull-right" data-buyersId="{{ item.id }}">同意</button>
+					</div>
+				</li>
+				{{# }); }}
+			</ul>
+		</div>
+		{{# } }}
+	</div>
+
+	<div class="clear"></div>
+</script>
+<!-- 按钮 -->
+<script type="text/html" id="changeBtn">
+	{{# if(d.goodsType == '1'){ }}
+	<li>
+		<div class="clearfix tb-btn tb-btn-basket theme-login">
+			<a id="applyChange" title="申请交换">
+				<i></i>申请交换</a>
+		</div>
+	</li>
+	<li style="margin-left: 10px;">
+		<div class="clearfix tb-btn tb-btn-basket theme-login">
+			<a id="addToShortcart" title="加入购物车">
+				<i></i>加入购物车</a>
+		</div>
+	</li>
+	{{# } }}
+</script>
+<!-- 卖家信息 -->
+<script type="text/html" id="sellerInformation">
+	<div class="tb-detail-hd">
+		<h1>
+			{{ d.name }}
+		</h1>
+	</div>
+	<div class="seller_information">
+		<ul>
+			<li class="clearfix">
+				<div class="left pull-left">用户名：</div>
+				<div class="right pull-left">{{ d.sellerInfo.userName }}</div>
+			</li>
+			<li class="clearfix">
+				<div class="left pull-left">手机号：</div>
+				<div class="right pull-left">{{ d.sellerInfo.phoneNum }}</div>
+			</li>
+			<li class="clearfix">
+				<div class="left pull-left">邮&nbsp;&nbsp;&nbsp;&nbsp;箱：</div>
+				<div class="right pull-left">{{ d.sellerInfo.email }}</div>
+			</li>
+		</ul>
+	</div>
+	<p class="description">{{ d.description }}</p>
+
+	<div class="pay">
+
+	</div>
+	{{# if(d.goodsType == '1'){ }}
+	<span id="collection" class="iconfont icon-collection">
+
+	</span>
+	{{# } }}
+</script>
+<!-- 我要评论 -->
+<script type="text/html" id="addCommentTemp">
+	<form action="http://localhost:8080/change-web/goodsComments/save" method="POST" id="uploadForm" accept-charset="utf-8" enctype="multipart/form-data">
+		<input type="hidden" name="goodsId" value="{{ d }}" />
+		<div class="clearfix box">
+			<div class="left pull-left">描述</div>
+			<div class="right pull-left upload_description">
+				<textarea name="description"></textarea>
+			</div>
+		</div>
+		<div class="clearfix box">
+
+			<div class="left pull-left">图片</div>
+			<div class="right pull-left upload_img">
+				<div class="clearfix">
+					<div class="pull-left img_box">
+						<ul class="clearfix">
+							<li class="pull-left">
+								<img src="" />
+								<span class="see iconfont icon-chakan"></span>
+								<span class="delete iconfont icon-close"></span>
+								<input type="file" class="input_file" name="files">
+							</li>
+							<li class="pull-left">
+								<img src="" />
+								<span class="see iconfont icon-chakan"></span>
+								<span class="delete iconfont icon-close"></span>
+								<input type="file" class="input_file" name="files">
+							</li>
+							<li class="pull-left">
+								<img src="" />
+								<span class="see iconfont icon-chakan"></span>
+								<span class="delete iconfont icon-close"></span>
+								<input type="file" class="input_file" name="files">
+							</li>
+						</ul>
+
+					</div>
+
+					<div class="upload_img_btn pull-left"></div>
+				</div>
+			</div>
+		</div>
+	</form>
+</script>
+<script src="./libs/layui/layui.all.js"></script>
+<script src="./js/ServerUtil.js"></script>
+<script src="./libs/js/intro.js"></script>
+<script src="./js/page.js"></script>
+<script src="./libs/js/jquery.form.js"></script>
+<script>
+	var $;
+	var jQuery;
+	layui.use(['layer', 'laytpl', 'laypage'], function () {
+		jQuery = layui.$;
+		$ = layui.$;
+		var layer = layui.layer;
+		var laytpl = layui.laytpl;
+		var laypage = layui.laypage;
+		jqForm();
+		var goodsId = getQueryVariable('goodsId');
+		ServerUtil.api('change-web/goods/', 'getGoodsInfo', {
+			id: goodsId
+		}, function (result) {
+			addPage({
+				model: 'change-web/goodsComments/',
+				method: 'getGoodsComments',
+				data: {
+					goodsId: goodsId
+				},
+				elemId: 'page',
+				pageSize: 10,
+				success: function (conments) {
+					result.conments = conments.datalist;
+					result.imagesSrc = result.imagesSrc.split(',');
+					result.conments.forEach(function (val) {
+						val.imagesSrc = val.annexSrc.split(',');
+					});
+
+					//放大镜
+					var fangdaTpl = fangdajing.innerHTML,
+						fangdaView = $('#clearcontent')[0];
+					laytpl(fangdaTpl).render(result.imagesSrc, function (html) {
+						fangdaView.innerHTML = html;
+					});
+
+					//商品列表
+					var getListTpl = userList.innerHTML,
+						listView = $('.introduce .introduceMain .am-tabs')[0];
+					laytpl(getListTpl).render(result, function (html) {
+						listView.innerHTML = html;
+					});
+
+					//放大图片
+					$('#userListBox li .img-list img').on('click', function () {
+						$(this).parent().parent().parent().children('.show-img').show().children('img')[0].src = $(this)[0].src;
+					});
+					$('#userListBox li .show-img img').on('click', function () {
+						$(this).parent().hide();
+					});
+
+					//卖家信息
+					var getSellerTpl = sellerInformation.innerHTML,
+						sellerView = $('#sellerInfomationBox')[0];
+					laytpl(getSellerTpl).render(result, function (html) {
+						sellerView.innerHTML = html;
+					});
+					//按钮
+					var getBtnTpl = changeBtn.innerHTML,
+						btnView = $('.pay')[0];
+					laytpl(getBtnTpl).render(result, function (html) {
+						btnView.innerHTML = html;
+					});
+
+					$('.changeYes').on('click', function () {
+						var self = this;
+						layer.confirm('确定交换吗？', {
+							btn: ['确定', '取消'],
+						}, function (index, layero) {
+							//按钮【按钮一】的回调
+							ServerUtil.api('change-web/orders/', 'update', {
+								goodsId: goodsId,
+								buyersId: self.dataset.buyersid,
+								status: '3'
+							}, function () {
+								$('.changeYes').parent().parent().remove();
+								layer.close(index);
+								window.location.href = window.location.origin + '/change-web/search.html';
+							});
+						}, function (index) {
+							layer.close(index);
+						});
+					});
+					$('.changeNo').on('click', function () {
+						var self = this;
+						layer.confirm('确定拒绝吗？', {
+
+							btn: ['确定', '取消'],
+						}, function (index, layero) {
+							ServerUtil.api('change-web/orders/', 'update', {
+								goodsId: goodsId,
+								buyersId: self.dataset.buyersid,
+								status: '2'
+							}, function () {
+								$(self).parent().parent().remove();
+								layer.close(index);
+							});
+							//按钮【按钮一】的回调
+						}, function (index) {
+							layer.close(index);
+						});
+					});
+
+
+
+					var collectionId;
+
+					//判断是否登录
+					ServerUtil.api('change-web/login/', 'loginStatus', {}, function (result) {
+						if (result.userName) {
+							$('.header .message-l .topMessage .menu-hd a').hide();
+							$('.header .message-r').show();
+							$('.message-l .menu-hd')[0].innerHTML =
+								'<a href="./login.html" target="_top" class="h" id="logout">退出登录</a>'
+							$('#logout').on('click', function () {
+								ServerUtil.api('change-web/login/', 'logout', {}, function () {
+									window.location.href = window.location.origin + '/change-web/login.html';
+								});
+							});
+							//收藏
+							ServerUtil.api('change-web/favorites/', 'getFavoritesInfo', {
+								goodsId: goodsId
+							}, function (result) {
+								if (result.status == '0') {
+									$('#collection').addClass('active');
+									collectionId = result.favoritesId;
+								}
+							});
+							$('#collection').on('click', function () {
+								var self = this;
+								if ($(this).hasClass('active')) {
+									ServerUtil.api('change-web/favorites/', 'delete', {
+										ids: collectionId
+									}, function (result) {
+										$(self).removeClass('active');
+									});
+								} else {
+									ServerUtil.api('change-web/favorites/', 'save', {
+										goodsId: goodsId
+									}, function (result) {
+										$(self).addClass('active');
+										collectionId = result.favoritesId;
+									});
+								}
+							});
+							//申请交换
+							$('#applyChange').on('click', function () {
+								ServerUtil.api('change-web/orders/', 'getOrdersList', {
+									goodsId: goodsId,
+									pageNum: 1,
+									pageSize: 10
+								}, function (ordersList) {
+									if (ordersList.count == 0) {
+										ServerUtil.api('change-web/orders/', 'save', {
+											goodsId: goodsId,
+											sellerId: result.creatorId,
+											pageNum: 1,
+											pageSize: 10
+										}, function () {
+											layer.msg('申请成功', {
+												time: 2000
+											});
+										});
+									} else {
+										layer.msg('已经申请过', {
+											time: 2000
+										});
+									}
+								});
+							});
+
+							//加入购物车
+							$('#addToShortcart').on('click', function () {
+								ServerUtil.api('change-web/shopcart/', 'save', {
+									goodsId: goodsId
+								}, function () {
+									layer.msg('成功加入购物车', {
+										time: 2000
+									});
+								});
+							});
+							//我要评论
+							var uploadImgNum = 0;
+							var getCommentTpl = addCommentTemp.innerHTML,
+								commentView = document.getElementById('uploadBox');
+							laytpl(getCommentTpl).render(goodsId, function (html) {
+								commentView.innerHTML = html;
+							});
+							$('.upload_box .upload_img .upload_img_btn').on('click', function () {
+								var self = this;
+								$('.upload_box .upload_img .img_box ul li .input_file').each(function (index, value) {
+									if (value.files.length == 0) {
+										$(value).click();
+										return false;
+									}
+								});
+								// $('.upload_box .upload_img .input_file').click();
+							});
+							$('.upload_box .upload_img .img_box ul li').hover(function () {
+								$(this).children('span').show();
+							}, function () {
+								$(this).children('span').hide();
+							});
+							$('.input_file').change(function (e) {
+								// var box = $('.upload_box .upload_img .img_box ul');
+								var file = this.files[0];
+								var self = this;
+								if (window.FileReader) {
+									var reader = new FileReader();
+									reader.readAsDataURL(file);
+									//监听文件读取结束后事件    
+									reader.onloadend = function (e) {
+										$(self).parent().children('img')[0].src = reader.result;
+										$(self).parent().show();
+										uploadImgNum++;
+										if (uploadImgNum == 3) {
+											$('.upload_box .upload_img .upload_img_btn').hide();
+										}
+									};
+								}
+							});
+
+							$('#addComment').on('click', function () {
+								layer.open({
+									title: '编辑',
+									type: 1,
+									skin: 'layui-layer-molv layer-btn-class',
+									resize: false,
+									btn: ['确定', '取消'],
+									yes: function (index, layero) {
+
+										var options = {
+											type: 'post',
+											clearForm: true,
+											success: function () {
+												window.location.href = window.location.href;
+												layer.close(index);
+											},
+										};
+										$('#uploadForm').ajaxSubmit(options);
+									},
+									area: '660px',
+									btn2: function (index, layero) {
+										//按钮【按钮二】的回调
+										layer.close(index);
+										uploadImgNum = 0;
+										$('.upload_box .upload_img .img_box ul li .input_file').each(function (index, value) {
+											value.value = '';
+										});
+										$('.upload_box .upload_img .img_box ul li img').each(function (index, value) {
+											value.src = '';
+										});
+										$('.upload_box .upload_img .img_box ul li').each(function (index, value) {
+											$(value).hide();
+										});
+										$('#uploadBox .upload_description textarea').val('');
+										$('.upload_box .upload_img .upload_img_btn').show();
+									},
+									content: $('#uploadBox'),
+									cancel: function () {
+										uploadImgNum = 0;
+										$('.upload_box .upload_img .img_box ul li .input_file').each(function (index, value) {
+											value.value = '';
+										});
+										$('.upload_box .upload_img .img_box ul li img').each(function (index, value) {
+											value.src = '';
+										});
+										$('.upload_box .upload_img .img_box ul li').each(function (index, value) {
+											$(value).hide();
+										});
+										$('#uploadBox .upload_description textarea').val('');
+										$('.upload_box .upload_img .upload_img_btn').show();
+									}
+								});
+							});
+							$('.upload_box .upload_img .img_box ul li .see').on('click', function () {
+								var imgSrc = $(this).parent().children('img')[0].src;
+								$('#visitImg').children('img')[0].src = imgSrc;
+								layer.open({
+									title: '查看图片',
+									type: 1,
+									skin: 'layui-layer-molv layer-btn-class',
+									resize: false,
+									area: ['500px', '542px'],
+									content: $('#visitImg'),
+								});
+							});
+							$('.upload_box .upload_img .img_box ul li .delete').on('click', function () {
+								$(this).parent().children('img')[0].src = '';
+								$(this).parent().hide();
+								$(this).parent().children('.input_file')[0].value = '';
+								uploadImgNum--;
+								$('.upload_box .upload_img .upload_img_btn').show();
+							});
+
+						} else {
+							$('#sellerSrc')[0].href = './login.html';
+							$('#collection').on('click', function () {
+								window.location.href = window.location.origin + '/change-web/login.html';
+							});
+							$('#applyChange').on('click', function () {
+								window.location.href = window.location.origin + '/change-web/login.html';
+							});
+							$('#addToShortcart').on('click', function () {
+								window.location.href = window.location.origin + '/change-web/login.html';
+							});
+							$('#addComment').on('click', function () {
+								window.location.href = window.location.origin + '/change-web/login.html';
+							});
+						}
+					});
+					afterInit();
+				},
+				laypage: laypage
+			});
+
+		});
+		$('#ai-topsearch').on('click', function (e) {
+			e.preventDefault();
+			var inputVal = encodeURI($('#searchInput').val() || '');
+			window.location.href = window.location.origin + '/change-web/search.html?goodsName=' + inputVal;
+		});
+	});
+</script>
+
+</html>

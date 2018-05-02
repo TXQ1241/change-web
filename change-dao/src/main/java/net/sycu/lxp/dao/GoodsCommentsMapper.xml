@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.sycu.lxp.dao.GoodsCommentsMapper">
+  <resultMap id="BaseResultMap" type="net.sycu.lxp.pojo.GoodsComments">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="goods_id" jdbcType="VARCHAR" property="goodsId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="annex_src" jdbcType="VARCHAR" property="annexSrc" />
+    <result column="attr2" jdbcType="VARCHAR" property="attr2" />
+    <result column="attr3" jdbcType="VARCHAR" property="attr3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_id, user_id, content, create_time, is_deleted, annex_src, attr2, attr3
+  </sql>
+  
+  <sql id="Get_Comments_Sql">
+ 	<if test="goodsId != null and goodsId != ''" >
+		and gc.goods_id = #{goodsId}
+	</if> 
+ 		and gc.is_deleted != -1	
+  </sql>
+  
+  <insert id="insert" parameterType="net.sycu.lxp.pojo.GoodsComments">
+    insert into goods_comments (id, goods_id, user_id, 
+      content, create_time, is_deleted, 
+      annex_src, attr2, attr3
+      )
+    values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{isDeleted,jdbcType=INTEGER}, 
+      #{annexSrc,jdbcType=VARCHAR}, #{attr2,jdbcType=VARCHAR}, #{attr3,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <!-- 获取评论信息 -->
+  <select id="getComments" resultMap="BaseResultMap" parameterType="net.sycu.lxp.vo.CommentsVo">
+  	select * from goods_comments gc 
+  	<where>
+		<include refid="Get_Comments_Sql"></include>
+  	</where>
+  	limit #{pageNum},#{pageSize}
+  </select>
+  
+  <!-- 获取评论记录 -->
+  <select id="getCommentsCount" resultType="java.lang.Integer" parameterType="net.sycu.lxp.vo.CommentsVo">
+  	select count(*) from goods_comments gc
+  	<where>
+  		<include refid="Get_Comments_Sql"></include>
+  	</where>
+  </select>
+  
+  <!-- 批量删除评论信息  -->
+  <delete id="deleteCommentsByIds" parameterType="java.lang.String">
+      update goods_comments gc set gc.is_deleted = -1
+      <where>
+          gc.id in 
+          <foreach collection="array" item="id" separator="," open="(" close=")">
+              #{id}
+          </foreach>
+      </where>
+  </delete>
+  
+</mapper>

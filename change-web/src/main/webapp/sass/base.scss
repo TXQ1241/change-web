@@ -1,0 +1,42 @@
+@import "default";
+
+* {
+    box-sizing: border-box;
+}
+
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,dl,dt,dd {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: $default-font-size;
+    font-family: $default-font-family;
+    color: $default-font-color;
+}
+
+a {
+    text-decoration: none;
+    color: $default-font-color;
+    cursor: pointer;
+}
+
+a:hover {
+    color: $default-hover-color;
+}
+
+input, img {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    outline-style: none;
+    vertical-align: bottom;
+}
+
+s,i {
+    text-decoration: none;
+    font-style: normal;
+}
+
+button {
+    outline: none;
+    border: 0 none;
+}

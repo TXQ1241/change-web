@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>搜索页面</title>
+	<link rel="stylesheet" href="./libs/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./libs/layui/css/layui.css">
+	<link href="./libs/css/amazeui.css" rel="stylesheet" type="text/css" />
+	<link href="./css/index.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="./iconfont/iconfont.css">
+	<link href="./css/demo.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="./css/seastyle.css">
+	<style>
+		@media only screen and (min-width: 1025px) {
+			.am-avg-lg-4>li:nth-of-type(4n + 1) {
+				clear: none;
+			}
+		}
+
+		.seller {
+			width: 1200px;
+			margin: 0 auto;
+		}
+
+		#upload {
+			position: absolute;
+			right: 0;
+			background-color: #d2364c;
+			color: white;
+			/* padding: 5px 10px; */
+			width: 100px;
+			height: 45px;
+			border: 0 none;
+			font-size: 16px;
+		}
+
+		.layui-layer-molv .layui-layer-title {
+			background-color: #d2364c !important;
+		}
+
+		.layui-layer-molv .layui-layer-btn a {
+			background: #F03726 !important;
+			border-color: #F03726 !important;
+		}
+
+		.layui-layer-molv .layui-layer-btn a {
+			background: #F03726 !important;
+			border-color: #F03726 !important;
+			color: white;
+		}
+
+		.layui-layer-close {
+			color: white;
+		}
+
+		.goodsDelete {
+			width: 100%;
+			border: 0 none;
+			height: 35px;
+			box-sizing: border-box;
+			background-color: #F03726;
+			color: white;
+		}
+
+		.upload_box {
+			padding: 20px;
+			box-sizing: border-box;
+		}
+
+		.upload_box div {
+			box-sizing: border-box;
+		}
+
+		.upload_box .box {
+			margin-bottom: 10px;
+		}
+
+		.upload_box input {
+			box-sizing: border-box;
+		}
+
+		.upload_box .left {
+			width: 20%;
+			font-size: 16px;
+		}
+
+		.upload_box .right {
+			width: 80%;
+		}
+
+		.upload_box .upload_title input {
+			width: 100%;
+			border-radius: 5px;
+			outline: none;
+			border: 1px solid #e0e0e0;
+			height: 30px;
+			vertical-align: baseline;
+		}
+
+		.upload_box .upload_title input:focus {
+			border: 1px solid #d2364c;
+		}
+
+		.upload_box .upload_category ul li {
+			border: 1px solid #e0e0e0;
+			width: 90px;
+			height: 35px;
+			line-height: 35px;
+			margin: 0 10px 10px 0;
+			text-align: center;
+			cursor: pointer;
+		}
+
+		.upload_box .upload_category ul li.active {
+			border: 1px solid #d2364c;
+		}
+
+		.upload_box .upload_description textarea {
+			width: 100%;
+			height: 200px;
+			resize: none;
+			border: 1px solid #e0e0e0;
+			box-sizing: border-box;
+			padding: 10px;
+			outline: none;
+			border-radius: 5px;
+		}
+
+		.upload_box .upload_description textarea:focus {
+			border: 1px solid #d2364c;
+		}
+
+		.upload_box .upload_img .img_box ul li {
+			width: 48px;
+			height: 48px;
+			position: relative;
+			margin-right: 10px;
+			display: none;
+		}
+
+		.upload_box .upload_img .img_box ul li img {
+			width: 48px;
+			height: 48px;
+			border: 1px solid #e0e0e0;
+		}
+
+		.upload_box .upload_img .img_box ul li span {
+			position: absolute;
+			background-color: rgb(245, 245, 245);
+			font-size: 14px;
+			font-weight: 700;
+			cursor: pointer;
+			padding: 3px;
+			border: 0 none;
+			border-radius: 5px;
+			top: 50%;
+			display: none;
+		}
+
+		.upload_box .upload_img .img_box ul li span:hover {
+			color: #d2364c;
+		}
+
+		.upload_box .upload_img .img_box ul li .see {
+			left: 25%;
+			transform: translate(-50%, -50%);
+		}
+
+		.upload_box .upload_img .img_box ul li .delete {
+			right: 25%;
+			transform: translate(50%, -50%);
+		}
+
+		.upload_box .upload_img .img_box .input_file {
+			display: none;
+		}
+
+		.upload_box .upload_img .upload_img_btn {
+			width: 48px;
+			height: 48px;
+			border: 1px solid #e0e0e0;
+			background: url(./images/bg-upload.png) no-repeat -2px -2px;
+			cursor: pointer;
+		}
+
+		.visit_img img {
+			width: 500px;
+			height: 500px;
+			border: 0 none;
+		}
+
+		.header .message-r {
+			display: none;
+		}
+
+		#goodsListBox ul li img {
+			width: 218px;
+			height: 218px;
+
+		}
+
+		#page .layui-box {
+			float: right;
+		}
+
+		#page {
+			margin-top: 20px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<!--顶部导航条 -->
+	<div class="hmtop">
+		<div class="am-container header">
+			<ul class="message-l">
+				<div class="topMessage">
+					<div class="menu-hd">
+						<a href="./login.html" target="_top" class="h">亲，请登录</a>
+						<a href="./register.html" target="_top">免费注册</a>
+					</div>
+				</div>
+			</ul>
+			<ul class="message-r">
+				<div class="topMessage home">
+					<div class="menu-hd">
+						<a href="./index.html" target="_top" class="h">商城首页</a>
+					</div>
+				</div>
+				<div class="topMessage my-shangcheng">
+					<div class="menu-hd MyShangcheng">
+						<a href="./information.html" target="_top">
+							<i class="iconfont icon-gerenzhongxin"></i>个人中心</a>
+					</div>
+				</div>
+				<div class="topMessage mini-cart">
+					<div class="menu-hd">
+						<a id="mc-menu-hd" href="./shopcart.html" target="_top">
+							<i class="iconfont icon-gouwuche"></i>
+							<span>购物车</span>
+						</a>
+					</div>
+				</div>
+				<div class="topMessage favorite">
+					<div class="menu-hd">
+						<a href="./collection.html" target="_top">
+							<i class="iconfont icon-shoucangjia"></i>
+							<span>收藏夹</span>
+						</a>
+					</div>
+				</div>
+			</ul>
+		</div>
+	</div>
+
+	<!--悬浮搜索框-->
+
+	<div class="nav white">
+
+		<div class="search-bar pr">
+			<a name="index_none_header_sysc" href="#"></a>
+			<form>
+				<input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off">
+				<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
+			</form>
+		</div>
+	</div>
+
+	<b class="line"></b>
+	<div class="search">
+		<div class="search-list">
+			<div class="nav-table">
+				<div class="long-title">
+					<span class="all-goods">全部分类</span>
+				</div>
+				<div class="nav-cont">
+					<ul>
+						<li class="index">
+							<a href="./index.html">首页</a>
+						</li>
+						<li class="qc">
+							<a href="./seller.html" id="sellerSrc">卖家中心</a>
+						</li>
+						<li class="qc">
+							<a href="./search.html">买家中心</a>
+						</li>
+						<li class="qc">
+							<a href="#">数据统计</a>
+						</li>
+					</ul>
+				</div>
+
+				<button id="upload">上传商品</button>
+			</div>
+
+			<div class="am-g am-g-fixed">
+				<div class="am-u-sm-12 am-u-md-12">
+					<div class="search-content" id="goodsListBox">
+
+
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<div style="display: none;" id="uploadBox" class="upload_box">
+
+	</div>
+	<div style="display: none;" id="visitImg" class="visit_img">
+		<img src="" alt="">
+	</div>
+</body>
+<script src="./js/data.js"></script>
+<!-- 上传 -->
+<script type="text/html" id="uploadTmp">
+	<form action="http://localhost:8080/change-web/goods/save" method="POST" id="uploadForm" enctype="multipart/form-data">
+		<div class="clearfix box">
+			<div class="left pull-left">标题:</div>
+			<div class="right pull-left upload_title">
+				<input type="text" name="name">
+			</div>
+		</div>
+		<div class="clearfix box">
+			<div class="left pull-left">标签</div>
+			<div class="right pull-left upload_category">
+				<ul class="clearfix">
+					{{# layui.each(d, function(index, item){ }}
+					<li class="category pull-left" data-categoryId='{{ item.id }}'>{{ item.name }}</li>
+					{{# }); }}
+				</ul>
+				<input type="hidden" name="categoryId" />
+			</div>
+		</div>
+		<div class="clearfix box">
+			<div class="left pull-left">描述</div>
+			<div class="right pull-left upload_description">
+				<textarea name="description"></textarea>
+			</div>
+		</div>
+		<div class="clearfix box">
+
+			<div class="left pull-left">图片</div>
+			<div class="right pull-left upload_img">
+				<div class="clearfix">
+					<div class="pull-left img_box">
+						<ul class="clearfix">
+							<li class="pull-left">
+								<img src="" />
+								<span class="see iconfont icon-chakan"></span>
+								<span class="delete iconfont icon-close"></span>
+								<input type="file" class="input_file" name="files">
+							</li>
+							<li class="pull-left">
+								<img src="" />
+								<span class="see iconfont icon-chakan"></span>
+								<span class="delete iconfont icon-close"></span>
+								<input type="file" class="input_file" name="files">
+							</li>
+							<li class="pull-left">
+								<img src="" />
+								<span class="see iconfont icon-chakan"></span>
+								<span class="delete iconfont icon-close"></span>
+								<input type="file" class="input_file" name="files">
+							</li>
+						</ul>
+
+					</div>
+
+					<div class="upload_img_btn pull-left"></div>
+				</div>
+			</div>
+		</div>
+	</form>
+</script>
+<script>
+</script>
+<!-- 商品列表 -->
+<script type="text/html" id="goodsList">
+	<ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
+		{{# layui.each(d, function(index, item){ }}
+		<li data-goodsId="{{ item.id }}">
+			<div class="i-pic limit">
+				<img src="{{ item.imagesSrc }}" class="loadImg"/>
+				<p class="title fl">{{ item.name }}</p>
+				<div>
+					<button class="goodsDelete">删除</button>
+				</div>
+			</div>
+		</li>
+		{{# }); }}
+	</ul>
+	{{# if(d.length){ }}
+	<div id="page" class="clearfix">
+
+	</div>
+	{{# } }}
+</script>
+<script src="./libs/layui/layui.all.js"></script>
+<script src="./js/ServerUtil.js"></script>
+<script src="./js/page.js"></script>
+<script src="./libs/js/jquery.form.js"></script>
+<script>
+	var $;
+	var jQuery;
+	layui.use(['layer', 'laytpl', 'laypage'], function () {
+		jQuery = layui.$;
+		$ = layui.$;
+		var layer = layui.layer;
+		var laytpl = layui.laytpl;
+		var laypage = layui.laypage;
+		jqForm();
+
+		//判断是否登录
+		ServerUtil.api('change-web/login/', 'loginStatus', {}, function (result) {
+			if (result.userName) {
+				$('.header .message-l .topMessage .menu-hd a').hide();
+				$('.header .message-r').show();
+			} else {
+				$('#sellerSrc')[0].href = './login.html';
+			}
+		});
+		//商品列表
+		var getListTpl = goodsList.innerHTML,
+			listView = document.getElementById('goodsListBox');
+		addPage({
+			model: 'change-web/goods/',
+			method: 'goodsList',
+			data: {
+				goodsType: '2'
+			},
+			elemId: 'page',
+			pageSize: 10,
+			success: function (result) {
+				laytpl(getListTpl).render(result.datalist, function (html) {
+					listView.innerHTML = html;
+				});
+				$('.goodsDelete').on('click', function () {
+					var li = $(this).parent().parent().parent();
+					ServerUtil.api('change-web/goods/', 'delete', {
+						ids: li[0].dataset.goodsid
+					}, function (result) {
+						li.remove();
+					})
+				});
+				$('#goodsListBox ul li img').on('click', function () {
+					window.location.href = window.location.origin + '/change-web/introduction.html?goodsId=' + $(this).parent()
+						.parent()[0].dataset.goodsid;
+				});
+			},
+			laypage: laypage
+		});
+
+
+		//弹框
+		var uploadImgNum = 0;
+		var getTpl = uploadTmp.innerHTML,
+			view = document.getElementById('uploadBox');
+		ServerUtil.api('change-web/category/', 'getCategory', {}, function (result) {
+			laytpl(getTpl).render(result, function (html) {
+				view.innerHTML = html;
+			});
+			$('#uploadBox .category').on('click', function () {
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');
+				$(this).parent().parent().children('input').val($(this)[0].dataset.categoryid);
+			});
+			$('.upload_box .upload_img .upload_img_btn').on('click', function () {
+				var self = this;
+				$('.upload_box .upload_img .img_box ul li .input_file').each(function (index, value) {
+					if (value.files.length == 0) {
+						$(value).click();
+						return false;
+					}
+				});
+				// $('.upload_box .upload_img .input_file').click();
+			});
+			$('.upload_box .upload_img .img_box ul li').hover(function () {
+				$(this).children('span').show();
+			}, function () {
+				$(this).children('span').hide();
+			});
+			$('.input_file').change(function (e) {
+				// var box = $('.upload_box .upload_img .img_box ul');
+				var file = this.files[0];
+				var self = this;
+				if (window.FileReader) {
+					var reader = new FileReader();
+					reader.readAsDataURL(file);
+					//监听文件读取结束后事件    
+					reader.onloadend = function (e) {
+						$(self).parent().children('img')[0].src = reader.result;
+						$(self).parent().show();
+						uploadImgNum++;
+						if (uploadImgNum == 3) {
+							$('.upload_box .upload_img .upload_img_btn').hide();
+						}
+					};
+				}
+			});
+			// $('form').on('submit', function (e) {
+			// 	e.preventDefault()
+			// 	// ....
+			// });
+
+			$('#upload').on('click', function () {
+				layer.open({
+					title: '编辑',
+					type: 1,
+					skin: 'layui-layer-molv layer-btn-class',
+					resize: false,
+					btn: ['确定', '取消'],
+					yes: function (index, layero) {
+						//var data = {};
+						//data.files = imgArr;
+						//data.name = $('.upload_box .upload_title input').val();
+						//data.description = $('.upload_box .upload_description textarea').val();
+						//ServerUtil.uploadFile('change-web/goods/', 'save', data, function () {
+
+						// });
+						var options = {
+							type: 'post',
+							clearForm: true,
+							success: function () {
+								window.location.href = window.location.href;
+								layer.close(index);
+							},
+						};
+						$('#uploadForm').ajaxSubmit(options);
+
+					},
+					area: '660px',
+					btn2: function (index, layero) {
+						//按钮【按钮二】的回调
+						layer.close(index);
+						uploadImgNum = 0;
+						$('.upload_box .upload_img .img_box ul li .input_file').each(function (index, value) {
+							value.value = '';
+						});
+						$('.upload_box .upload_img .img_box ul li img').each(function (index, value) {
+							value.src = '';
+						});
+						$('.upload_box .upload_img .img_box ul li').each(function (index, value) {
+							$(value).hide();
+						});
+						$('.upload_box .upload_title input').val('');
+						$('#uploadBox .category').each(function (index, value) {
+							$(value).removeClass('active');
+						});
+						$('#uploadBox .upload_category input').val('');
+						$('#uploadBox .upload_description textarea').val('');
+						$('.upload_box .upload_img .upload_img_btn').show();
+					},
+					content: $('#uploadBox'),
+					cancel: function () {
+						uploadImgNum = 0;
+						$('.upload_box .upload_img .img_box ul li .input_file').each(function (index, value) {
+							value.value = '';
+						});
+						$('.upload_box .upload_img .img_box ul li img').each(function (index, value) {
+							value.src = '';
+						});
+						$('.upload_box .upload_img .img_box ul li').each(function (index, value) {
+							$(value).hide();
+						});
+						$('.upload_box .upload_title input').val('');
+						$('#uploadBox .category').each(function (index, value) {
+							$(value).removeClass('active');
+						});
+						$('#uploadBox .upload_category input').val('');
+						$('#uploadBox .upload_description textarea').val('');
+						$('.upload_box .upload_img .upload_img_btn').show();
+					}
+				});
+			});
+			$('.upload_box .upload_img .img_box ul li .see').on('click', function () {
+				var imgSrc = $(this).parent().children('img')[0].src;
+				$('#visitImg').children('img')[0].src = imgSrc;
+				layer.open({
+					title: '查看图片',
+					type: 1,
+					skin: 'layui-layer-molv layer-btn-class',
+					resize: false,
+					area: ['500px', '542px'],
+					content: $('#visitImg'),
+				});
+			});
+			$('.upload_box .upload_img .img_box ul li .delete').on('click', function () {
+				$(this).parent().children('img')[0].src = '';
+				$(this).parent().hide();
+				$(this).parent().children('.input_file')[0].value = '';
+				uploadImgNum--;
+				$('.upload_box .upload_img .upload_img_btn').show();
+			});
+		})
+
+		$('#ai-topsearch').on('click', function (e) {
+			e.preventDefault();
+			var inputVal = encodeURI($('#searchInput').val() || '');
+			window.location.href = window.location.origin + '/change-web/search.html?goodsName=' + inputVal;
+		});
+
+	});
+</script>
+<script type="text/javascript" src="./js/script.js"></script>
+<script type="text/javascript" src="./js/quick_links.js"></script>
+
+</html>

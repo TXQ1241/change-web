@@ -1,0 +1,34 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box; }
+
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dt, dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  font-family: "微软雅黑";
+  color: #666; }
+
+a {
+  text-decoration: none;
+  color: #666;
+  cursor: pointer; }
+
+a:hover {
+  color: #e4393c; }
+
+input, img {
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+  outline-style: none;
+  vertical-align: bottom; }
+
+s, i {
+  text-decoration: none;
+  font-style: normal; }
+
+button {
+  outline: none;
+  border: 0 none; }

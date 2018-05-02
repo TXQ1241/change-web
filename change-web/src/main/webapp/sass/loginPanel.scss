@@ -1,0 +1,201 @@
+@import 'default';
+@import 'mixin';
+
+.login-panel {
+    padding-top: 20px;
+
+    .logo-content {
+        width: $default-login-width;
+        margin: 0 auto;
+
+        .logo-box {
+            .text-img {
+                margin-left: 20px;
+                img {
+                    vertical-align: bottom;
+                }
+            }
+        }
+    }
+
+    .main-box {
+        width: 100%;
+        height: 500px;
+        margin-top: 20px;
+        background: url(../images/login/login_bg.jpg) center #0099cc;
+
+        .main-content {
+            width: $default-login-width;
+            height: 100%;
+            margin: 0 auto;
+        }
+        .user {
+            margin-top: 55px;
+            width: 346px;
+            background-color: #fff;
+
+            .login-title {
+                width: 100%;
+                height: 54px;
+                border-bottom: 1px solid $default-border-color;
+                line-height: 54px;
+                position: relative;
+                font-size: 18px;
+                text-align: center;
+                // color: $default-font-color;
+
+                &.active {
+                    color: $default-hover-color;
+                    font-weight: 700;
+                }
+            }
+
+            .login-tab {
+                width: 100%;
+                height: 54px;
+                border-bottom: 1px solid $default-border-color;
+                line-height: 54px;
+                position: relative;
+                font-size: 18px;
+
+                .left-tab {
+                    width: 50%;
+                    height: 100%;
+                    text-align: center;
+                    color: $default-font-color;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: $default-hover-color;
+                        font-weight: 700;
+                    }
+
+                    &.active {
+                        color: $default-hover-color;
+                        font-weight: 700;
+                    }
+                }
+
+                .right-tab {
+                    width: 50%;
+                    height: 100%;
+                    text-align: center;
+                    color: $default-font-color;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: $default-hover-color;
+                        font-weight: 700;
+                    }
+
+                    &.active {
+                        color: $default-hover-color;
+                        font-weight: 700;                        
+                    }
+                }
+
+                .tab-line {
+                    width: 1px;
+                    height: 50%;
+                    border-right: 1px solid $default-border-color;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    @include transform(translateY(-50%));
+                }
+            }
+
+            .left-tab-content {
+                width: 100%;
+                text-align: center;
+                padding: 20px 0;
+            }
+
+            .right-tab-content {
+                padding: 20px;
+
+                .error-message {
+                    background: #ffebeb;
+                    color: #e4393c;
+                    border: 1px solid #faccc6;
+                    line-height: 15px;
+                    height: auto;
+                    position: relative;
+                    padding: 3px 10px 3px 40px;
+                    margin: -15px 0 5px;
+                    display: none;
+
+                    span {
+                        color: rgb(228, 57, 60);
+                        position: absolute;
+                        top: 50%;
+                        left: 10px;
+                        display: block;
+                        margin-top: -8px;
+                    }
+                }
+
+                .user-name,.password {
+                    width: 100%;
+
+                    .user-name-input-box,.password-input-box {
+                        width: 100%;
+                        position: relative;
+                        margin-bottom: 20px;
+
+                        .label {
+                            width: 38px;
+                            height: 38px;
+                            border: 1px solid $default-border-color;
+                            border-right: 0 none;
+                            display: inline-block;
+                            border-radius: 0;
+                            color: $default-font-color;
+                            padding-left: 10px;
+                            line-height: 30px;
+                            font-size: 20px;
+                        }
+
+                        input {
+                            height: 38px;
+                            width: 266px;
+                            padding-left: 10px;
+                            border: 1px solid $default-border-color;
+                        }
+
+                        .close {
+                            position: absolute;
+                            right: 5px;
+                            top: 8px;
+                            font-size: 22px;
+                        }
+                    }
+                }
+
+                .forget-pwd-box {
+                    margin-bottom: 20px;
+
+                    .forget-pwd {
+                        color: $default-font-color;
+                        cursor: pointer;
+                        font-size: 12px;
+    
+                        &:hover {
+                            color: $default-hover-color;
+                        }
+                    }
+                }
+
+                .submit-btn-box {
+                    button {
+                        width: 100%;
+                        background-color: $default-hover-color;
+                        font-size: 18px;
+                        color: #fff;
+                        padding: 4px 0;
+                    }
+                }
+            }
+        }
+    }
+}

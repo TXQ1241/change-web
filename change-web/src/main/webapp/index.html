@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>首页</title>
+
+	<link href="./libs/css/amazeui.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="./iconfont/iconfont.css">
+	<link href="./css/index.css" rel="stylesheet" type="text/css" />
+
+	<link href="./css/demo.css" rel="stylesheet" type="text/css" />
+
+	<link href="./css/hmstyle.css" rel="stylesheet" type="text/css" />
+	<script src="./libs/js/jquery.min.js"></script>
+	<script src="./libs/js/amazeui.min.js"></script>
+	<style>
+		li.appliance:hover {
+			background-color: white;
+			cursor: pointer;
+		}
+
+		li.appliance:hover a {
+			color: black;
+		}
+
+		.header .message-r {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="hmtop">
+		<!--顶部导航条 -->
+		<div class="am-container header">
+			<ul class="message-l">
+				<div class="topMessage">
+					<div class="menu-hd">
+						<a href="./login.html" target="_top" class="h">亲，请登录</a>
+						<a href="./register.html" target="_top">免费注册</a>
+					</div>
+				</div>
+			</ul>
+			<ul class="message-r">
+				<div class="topMessage home">
+					<div class="menu-hd">
+						<a href="./index.html" target="_top" class="h">商城首页</a>
+					</div>
+				</div>
+				<div class="topMessage my-shangcheng">
+					<div class="menu-hd MyShangcheng">
+						<a href="./information.html" target="_top">
+							<i class="iconfont icon-gerenzhongxin"></i>个人中心</a>
+					</div>
+				</div>
+				<div class="topMessage mini-cart">
+					<div class="menu-hd">
+						<a id="mc-menu-hd" href="./shopcart.html" target="_top">
+							<i class="iconfont icon-gouwuche"></i>
+							<span>购物车</span>
+						</a>
+					</div>
+				</div>
+				<div class="topMessage favorite">
+					<div class="menu-hd">
+						<a href="./collection.html" target="_top">
+							<i class="iconfont icon-shoucangjia"></i>
+							<span>收藏夹</span>
+						</a>
+					</div>
+				</div>
+			</ul>
+		</div>
+	</div>
+
+	<!--悬浮搜索框-->
+
+	<div class="nav white">
+		<div class="search-bar pr">
+			<a name="index_none_header_sysc" href="#"></a>
+			<form>
+				<input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off">
+				<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="button">
+			</form>
+		</div>
+	</div>
+
+	<div class="clear"></div>
+	<div class="banner">
+		<!--轮播 -->
+		<div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
+			<ul class="am-slides">
+				<li class="banner1">
+					<a>
+						<img src="./images/index/ad1.jpg" />
+					</a>
+				</li>
+				<li class="banner2">
+					<a>
+						<img src="./images/index/ad2.jpg" />
+					</a>
+				</li>
+				<li class="banner3">
+					<a>
+						<img src="./images/index/ad3.jpg" />
+					</a>
+				</li>
+				<li class="banner4">
+					<a>
+						<img src="./images/index/ad4.jpg" />
+					</a>
+				</li>
+
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="shopNav">
+		<div class="slideall">
+
+			<div class="long-title">
+				<span class="all-goods">全部分类</span>
+			</div>
+			<div class="nav-cont">
+				<ul>
+					<li class="index">
+						<a href="./index.html">首页</a>
+					</li>
+					<li class="qc">
+						<a href="./seller.html" id="sellerSrc">卖家中心</a>
+					</li>
+					<li class="qc">
+						<a href="./search.html">买家中心</a>
+					</li>
+					<li class="qc">
+						<a href="#">数据统计</a>
+					</li>
+				</ul>
+			</div>
+
+			<!--侧边导航 -->
+			<div id="nav" class="navfull">
+				<div class="area clearfix">
+					<div class="category-content" id="guide_2">
+
+						<div class="category">
+							<ul class="category-list" id="js_climit_li">
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+			<!--轮播-->
+
+			<script type="text/javascript">
+				(function () {
+					$('.am-slider').flexslider();
+				});
+				$(document).ready(function () {
+					$("li").hover(function () {
+						$(".category-content .category-list li.first .menu-in").css("display", "none");
+						$(".category-content .category-list li.first").removeClass("hover");
+						$(this).addClass("hover");
+						$(this).children("div.menu-in").css("display", "block")
+					}, function () {
+						$(this).removeClass("hover")
+						$(this).children("div.menu-in").css("display", "none")
+					});
+				})
+			</script>
+
+			<!--走马灯 -->
+
+		</div>
+	</div>
+</body>
+<script>
+	if ($(window).width() < 640) {
+		function autoScroll(obj) {
+			$(obj).find("ul").animate({
+				marginTop: "-39px"
+			}, 500, function () {
+				$(this).css({
+					marginTop: "0px"
+				}).find("li:first").appendTo(this);
+			})
+		}
+		$(function () {
+			setInterval('autoScroll(".demo")', 3000);
+		})
+	}
+</script>
+<script src="./js/quick_links.js"></script>
+<script src="./js/ServerUtil.js"></script>
+<script src="./js/data.js"></script>
+<script>
+	$(function () {
+		var str = '';
+		ServerUtil.api('change-web/category/', 'getCategory', {}, function (result) {
+			for (var i = 0; i < result.length; i++) {
+				str +=
+					'<li class="appliance js_toggle relative" data-categoryId="' + result[i].id + '"><div class="category-info"><h3 class="category-name b-category-name"><a class="ml-22" title="点心">' +
+						result[i].name + '</a></h3><em>&gt;</em></div><b class="arrow"></b></li>'
+			}
+			$('.category-list').html(str);
+			$('li.appliance').on('click', function () {
+				window.location.href= window.location.origin + '/change-web/search.html?categoryId=' + $(this)[0].dataset.categoryid;
+			});
+		});
+
+		ServerUtil.api('change-web/login/', 'loginStatus', {}, function (result) {
+			if (result.userName) {
+				$('.header .message-l .topMessage .menu-hd a').hide();
+				$('.header .message-r').show();
+				$('.message-l .menu-hd')[0].innerHTML = '<a href="./login.html" target="_top" class="h" id="logout">退出登录</a>'
+				$('#logout').on('click', function () {
+					ServerUtil.api('change-web/login/', 'logout', {}, function () {
+						window.location.href = window.location.origin + '/change-web/login.html';
+					});
+				});
+			} else {
+				$('#sellerSrc')[0].href = './login.html';
+			}
+		});
+
+		$('#ai-topsearch').on('click', function (e) {
+			e.preventDefault();
+			var inputVal = encodeURI($('#searchInput').val() || '');
+			window.location.href = window.location.origin + '/change-web/search.html?goodsName=' + inputVal;
+		});
+	});
+</script>
+<script type="text/javascript" src="./js/quick_links.js"></script>
+
+</html>

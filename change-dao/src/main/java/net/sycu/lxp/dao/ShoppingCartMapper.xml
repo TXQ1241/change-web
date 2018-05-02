@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.sycu.lxp.dao.ShoppingCartMapper" >
+  <resultMap id="BaseResultMap" type="net.sycu.lxp.pojo.ShoppingCart" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="attr1" property="attr1" jdbcType="VARCHAR" />
+    <result column="attr2" property="attr2" jdbcType="VARCHAR" />
+    <result column="attr3" property="attr3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, goods_id, create_time, is_deleted, attr1, attr2, attr3
+  </sql>
+  
+  <sql id="Get_ShopCart_Sql">
+	<if test="userId != null and userId != ''">
+		and sc.user_id = #{userId}
+	</if>
+		and sc.is_deleted != -1
+  </sql>
+  
+  <!-- 保存购物车记录 -->
+  <insert id="insert" parameterType="net.sycu.lxp.pojo.ShoppingCart" >
+    insert into shopping_cart (id, user_id, goods_id, 
+      create_time, is_deleted, attr1, 
+      attr2, attr3)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{isDeleted,jdbcType=INTEGER}, #{attr1,jdbcType=VARCHAR}, 
+      #{attr2,jdbcType=VARCHAR}, #{attr3,jdbcType=VARCHAR})
+  </insert>
+  
+  <!-- 获取购物车记录 -->
+  <select id="getShopCarts" resultMap="BaseResultMap" parameterType="net.sycu.lxp.vo.ShopCartVo">
+  	select * from shopping_cart sc
+  	<where>
+  		<include refid="Get_ShopCart_Sql"></include>
+  	</where>
+  	limit #{pageNum},#{pageSize}
+  </select>
+  
+  <!-- 获取购物车记录数 -->
+  <select id="getShopCartCount" resultMap="BaseResultMap" parameterType="net.sycu.lxp.pojo.ShoppingCart">
+  	select count(*) from shopping_cart sc
+  	<where>
+  		<include refid="Get_ShopCart_Sql"></include>
+  	</where>
+  </select>  
+  
+  <!-- 批量删除购物车记录 -->
+  <delete id="deleteShopCartByIds" parameterType="java.lang.String">
+  	update shopping_cart sc set sc.is_deleted = -1
+  	<where>
+      sc.id in 
+      <foreach collection="array" item="id" separator="," open="(" close=")">
+          #{id}
+      </foreach>
+  	</where>
+  </delete>
+  
+</mapper>

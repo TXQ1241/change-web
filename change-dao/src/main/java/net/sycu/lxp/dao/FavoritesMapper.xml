@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.sycu.lxp.dao.FavoritesMapper" >
+  <resultMap id="BaseResultMap" type="net.sycu.lxp.pojo.Favorites" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="attr1" property="attr1" jdbcType="VARCHAR" />
+    <result column="attr2" property="attr2" jdbcType="VARCHAR" />
+    <result column="attr3" property="attr3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, goods_id, user_id, create_time, is_deleted, attr1, attr2, attr3
+  </sql>
+    <!-- 收藏收藏查询的脚本片段 -->
+  <sql id="Get_Favorites_Sql">
+		<if test="userId != null and userId != ''">
+			and f.user_id = #{userId}
+		</if>
+		    and f.is_deleted != -1
+  </sql>
+  <!-- 保存收藏信息 -->
+  <insert id="insert" parameterType="net.sycu.lxp.pojo.Favorites" >
+    insert into favorites (id, goods_id, user_id, 
+      create_time, is_deleted, attr1, 
+      attr2, attr3)
+    values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{isDeleted,jdbcType=INTEGER}, #{attr1,jdbcType=VARCHAR}, 
+      #{attr2,jdbcType=VARCHAR}, #{attr3,jdbcType=VARCHAR})
+  </insert>
+  <!-- 通过商品对象获取商品列表 -->										
+  <select id="getFavoritesList" resultMap="BaseResultMap"  parameterType="net.sycu.lxp.vo.FavoritesVo" >
+     select *
+     from favorites f
+     <where>
+     	<include refid="Get_Favorites_Sql"></include>
+     </where>
+     limit #{pageNum},#{pageSize}
+  </select>
+  
+    <!-- 查询收藏记录的总条数 -->
+  <select id="getFavoritesCount" resultType="java.lang.Integer" parameterType="net.sycu.lxp.vo.FavoritesVo" >
+      select count(*)
+      from favorites f
+      <where>
+		<include refid="Get_Favorites_Sql"></include>
+      </where>
+  </select>
+  
+  <!-- 获取收藏信息 -->
+  <select id="getFavorites" resultMap="BaseResultMap" parameterType="net.sycu.lxp.pojo.Favorites">
+  	select * from favorites f
+  	<where>
+  		<if test="userId != null and userId != ''">
+  			and f.user_id = #{userId}
+  		</if>
+  		<if test="goodsId != null and goodsId != ''">
+  			and f.goods_id = #{goodsId}
+  		</if>
+  			and f.is_deleted != -1
+  	</where>
+  </select>
+
+  <!-- 批量删除收藏 -->
+  <delete id="deleteFavoritesByIds" parameterType="java.lang.String">
+      update favorites f set f.is_deleted = -1
+      <where>
+          f.id in 
+          <foreach collection="array" item="id" separator="," open="(" close=")">
+              #{id}
+          </foreach>
+      </where>
+  </delete>
+  
+</mapper>

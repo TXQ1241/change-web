@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>搜索页面</title>
+
+	<link rel="stylesheet" href="./libs/layui/css/layui.css">
+	<link href="./libs/css/amazeui.css" rel="stylesheet" type="text/css" />
+	<link href="./css/index.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="./iconfont/iconfont.css">
+	<link href="./css/demo.css" rel="stylesheet" type="text/css" />
+
+	<link href="./css/seastyle.css" rel="stylesheet" type="text/css" />
+
+	<style>
+		@media only screen and (min-width: 1025px) {
+			.am-avg-lg-4>li:nth-of-type(4n + 1) {
+				clear: none;
+			}
+		}
+
+		.header .message-r {
+			display: none;
+		}
+
+		.search-content ul li img {
+			width: 218px;
+			height: 218px;
+		}
+
+		#page .layui-box {
+			float: right;
+		}
+
+		#page {
+			margin-top: 20px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<!--顶部导航条 -->
+	<div class="hmtop">
+		<div class="am-container header">
+			<ul class="message-l">
+				<div class="topMessage">
+					<div class="menu-hd">
+						<a href="./login.html" target="_top" class="h">亲，请登录</a>
+						<a href="./register.html" target="_top">免费注册</a>
+					</div>
+				</div>
+			</ul>
+			<ul class="message-r">
+				<div class="topMessage home">
+					<div class="menu-hd">
+						<a href="./index.html" target="_top" class="h">商城首页</a>
+					</div>
+				</div>
+				<div class="topMessage my-shangcheng">
+					<div class="menu-hd MyShangcheng">
+						<a href="./information.html" target="_top">
+							<i class="iconfont icon-gerenzhongxin"></i>个人中心</a>
+					</div>
+				</div>
+				<div class="topMessage mini-cart">
+					<div class="menu-hd">
+						<a id="mc-menu-hd" href="./shopcart.html" target="_top">
+							<i class="iconfont icon-gouwuche"></i>
+							<span>购物车</span>
+						</a>
+					</div>
+				</div>
+				<div class="topMessage favorite">
+					<div class="menu-hd">
+						<a href="./collection.html" target="_top">
+							<i class="iconfont icon-shoucangjia"></i>
+							<span>收藏夹</span>
+						</a>
+					</div>
+				</div>
+			</ul>
+		</div>
+	</div>
+
+	<!--悬浮搜索框-->
+
+	<div class="nav white">
+
+		<div class="search-bar pr">
+			<a name="index_none_header_sysc" href="#"></a>
+			<form>
+				<input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off">
+				<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
+			</form>
+		</div>
+	</div>
+
+	<div class="clear"></div>
+	<b class="line"></b>
+	<div class="search">
+		<div class="search-list">
+			<div class="nav-table">
+				<div class="long-title">
+					<span class="all-goods">全部分类</span>
+				</div>
+				<div class="nav-cont">
+					<ul>
+						<li class="index">
+							<a href="./index.html">首页</a>
+						</li>
+						<li class="qc">
+							<a href="./seller.html" id="sellerSrc">卖家中心</a>
+						</li>
+						<li class="qc">
+							<a href="./search.html">买家中心</a>
+						</li>
+						<li class="qc">
+							<a href="#">数据统计</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+
+			<div class="am-g am-g-fixed">
+				<div class="am-u-sm-12 am-u-md-12">
+					<div class="search-content">
+
+
+
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+</body>
+<!-- 商品列表 -->
+<script type="text/html" id="goodsList">
+	<ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
+		{{# layui.each(d, function(index, item){ }}
+		<li data-goodsId="{{ item.id }}">
+			<div class="i-pic limit">
+				<img src="{{ item.imagesSrc }}" />
+				<p class="title fl">{{ item.name }}</p>
+			</div>
+		</li>
+		{{# }); }}
+	</ul>
+	{{# if(d.length){ }}
+	<div id="page">
+
+	</div>
+	{{# } }}
+</script>
+<script src="./libs/layui/layui.all.js"></script>
+<script src="./js/ServerUtil.js"></script>
+<script src="./js/page.js"></script>
+<script>
+	var $;
+	var jQuery;
+	layui.use(['layer', 'laytpl', 'laypage'], function () {
+		jQuery = layui.$;
+		$ = layui.$;
+		var layer = layui.layer;
+		var laytpl = layui.laytpl;
+		var laypage = layui.laypage;
+
+		var goodsName = decodeURI(getQueryVariable('goodsName'));
+		var categoryId = getQueryVariable('categoryId');
+		var data = {
+			
+		};
+		if (categoryId) {
+			data.id = categoryId;
+			var method = 'getGoodsByCategory';
+		} else if (goodsName != 'false') {
+			var method = 'goodsList';
+			data.name = goodsName;
+		} else {
+			var method = 'goodsList';
+		}
+		//商品列表
+		var getListTpl = goodsList.innerHTML,
+			listView = $('.search-content')[0];
+		addPage({
+			model: 'change-web/goods/',
+			method: method,
+			data: data,
+			elemId: 'page',
+			pageSize: 10,
+			success: function (result) {
+				laytpl(getListTpl).render(result.datalist, function (html) {
+					listView.innerHTML = html;
+				});
+				$('.search-content ul li').on('click', function () {
+					window.location.href = window.location.origin +
+						'/change-web/introduction.html?goodsId=' +
+						$(this)[0].dataset.goodsid;
+				});
+			},
+			laypage: laypage
+		});
+		$('#ai-topsearch').on('click', function (e) {
+			e.preventDefault();
+			var inputVal = encodeURI($('#searchInput').val() || '');
+			window.location.href = window.location.origin + '/change-web/search.html?goodsName=' + inputVal;
+		});
+		//判断是否登录
+		ServerUtil.api('change-web/login/', 'loginStatus', {}, function (result) {
+			if (result.userName) {
+				$('.header .message-l .topMessage .menu-hd a').hide();
+				$('.header .message-r').show();
+				$('.message-l .menu-hd')[0].innerHTML = '<a href="./login.html" target="_top" class="h" id="logout">退出登录</a>'
+				$('#logout').on('click', function () {
+					ServerUtil.api('change-web/login/', 'logout', {}, function () {
+						window.location.href = window.location.origin + '/change-web/login.html';
+					});
+				});
+			} else {
+				$('#sellerSrc')[0].href = './login.html';
+			}
+		});
+	});
+</script>
+<script type="text/javascript" src="./js/script.js"></script>
+<script type="text/javascript" src="./js/quick_links.js"></script>
+
+</html>

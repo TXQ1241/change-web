@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.sycu.lxp.dao.ReplyMapper">
+  <resultMap id="BaseResultMap" type="net.sycu.lxp.pojo.Reply">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="comments_id" jdbcType="VARCHAR" property="commentsId" />
+    <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="annex_src" jdbcType="VARCHAR" property="annexSrc" />
+    <result column="attr2" jdbcType="VARCHAR" property="attr2" />
+    <result column="attr3" jdbcType="VARCHAR" property="attr3" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, comments_id, create_user_id, content, is_deleted, annex_src, attr2, attr3, create_time
+  </sql>
+  <!-- 保存评论信息 -->
+  <insert id="insert" parameterType="net.sycu.lxp.pojo.Reply">
+    insert into reply (id, comments_id, create_user_id, 
+      content, is_deleted, annex_src, 
+      attr2, attr3, create_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{commentsId,jdbcType=VARCHAR}, #{createUserId,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}, #{annexSrc,jdbcType=VARCHAR}, 
+      #{attr2,jdbcType=VARCHAR}, #{attr3,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}
+      )
+  </insert>
+  
+  <!-- 获取评价下的所有回复信息 -->
+  <select id="getReplyByCommentsIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select * from reply r
+  	<where>
+  		r.comments_id in
+  		<foreach collection="list" item="id" separator="," open="(" close=")">
+  			#{id}
+  		</foreach>
+  	</where>
+  </select>
+  
+  <!-- 批量删除回复  -->
+  <delete id="deleteReplyByIds" parameterType="java.lang.String">
+      update reply r set r.is_deleted = -1
+      <where>
+          r.id in 
+          <foreach collection="array" item="id" separator="," open="(" close=")">
+              #{id}
+          </foreach>
+      </where>
+  </delete>
+  
+</mapper>
