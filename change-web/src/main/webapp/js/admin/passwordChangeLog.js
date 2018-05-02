@@ -181,7 +181,7 @@ layui.use(['table'], function () {
         var obj = {};
         var userAccount = $('#accountReload').val();
         var userName = $('#userNameReload').val();
-        obj.userAccount = userAccount;
+        obj.account = userAccount;
         obj.userName = userName;
         tableReload(obj);
     });
