@@ -6,6 +6,11 @@ layui.use(['table'], function () {
     var laytpl = layui.laytpl;
     var element = layui.element;
     var tableTitle = {
+        userName: '用户名',
+        userAccount: '账号',
+        operateTime: '操作时间'
+    };
+    var userTitle = {
         account: '账号',
         password: '密码',
         userName: '用户名',
@@ -14,6 +19,7 @@ layui.use(['table'], function () {
         idCard: '身份证号'
     };
     var userInfo;
+    //获取用户信息
     ServerUtil.api('change-web/user/', 'getUserInfo', {}, function (data) {
         userInfo = data;
         $('#userLoginAccount').text(data.account);
@@ -22,9 +28,9 @@ layui.use(['table'], function () {
     $('#changeUserInfo').on('click', function () {
         var userList = [];
         for (var attr in userInfo) {
-            if (tableTitle[attr]) {
+            if (userTitle[attr]) {
                 var dataObj = {};
-                dataObj.title = tableTitle[attr];
+                dataObj.title = userTitle[attr];
                 dataObj.val = userInfo[attr] || '';
                 dataObj.field = attr;
                 dataObj.className = 'table-edit-input';
@@ -65,7 +71,7 @@ layui.use(['table'], function () {
     table.render({
         elem: '#datalist',
         // height: 315,
-        url: window.location.origin + '/change-web/user/userList',
+        url: window.location.origin + '/change-web/operate/getOperateList',
         method: 'post',
         response: {
             statusCode: 1,
@@ -77,11 +83,11 @@ layui.use(['table'], function () {
             page: 0,
             limit: 10
         },
+        where: {
+            operateType: '1'
+        },
         page: {
             limits: [5, 10, 20, 50, 100]
-        },
-        where: {
-            userType: 2
         },
         id: 'poemUsers',
         done: function (res) {
@@ -90,31 +96,20 @@ layui.use(['table'], function () {
         cols: [
             [ //表头
                 {
-                    field: 'account',
-                    title: '账号',
-                    // width: 150
-                }, {
-                    field: 'password',
-                    title: '密码',
-                    width: 80
-                }, {
+                    type: 'checkbox'
+                },
+                {
                     field: 'userName',
                     title: '用户名',
                     // width: 150
                 }, {
-                    field: 'email',
-                    title: '邮箱',
+                    field: 'userAccount',
+                    title: '账号',
                     // width: 200
                 }, {
-                    field: 'phoneNum',
-                    title: '手机号',
-                    sort: true,
-                    // width: 200
-                }, {
-                    field: 'idCard',
-                    title: '身份证号',
-                    sort: true,
-                    // width: 200
+                    field: 'operateTime',
+                    title: '操作时间',
+                    // width: 150
                 }, {
                     fixed: 'right',
                     title: '操作',
@@ -157,7 +152,7 @@ layui.use(['table'], function () {
                 view.innerHTML = html;
             });
             layer.open({
-                title: '用户详情',
+                title: '商品详情',
                 type: 1,
                 skin: 'layui-layer-molv',
                 shadeClose: true,
@@ -165,46 +160,17 @@ layui.use(['table'], function () {
                 // area: ['500px', '300px'],
                 content: $('#tableBox')
             });
-        } else if (obj.event === 'edit') {
-            var userList = [];
-            for (var attr in data) {
-                if (tableTitle[attr]) {
-                    var dataObj = {};
-                    dataObj.title = tableTitle[attr];
-                    dataObj.val = data[attr] || '';
-                    dataObj.field = attr;
-                    dataObj.className = 'table-edit-input';
-                    userList.push(dataObj);
-                }
-            }
-            var getTpl = tableEdit.innerHTML,
-                view = document.getElementById('tableBox');
-            laytpl(getTpl).render(userList, function (html) {
-                view.innerHTML = html;
-            });
-            layer.open({
-                title: '编辑',
-                type: 1,
-                skin: 'layui-layer-molv layer-btn-class',
-                resize: false,
-                btn: ['确定', '取消'],
-                yes: function (index, layero) {
-                    //按钮【按钮一】的回调
-                    $('.table-edit-input').each(function (index, val) {
-                        data[val.dataset.type] = $(val).val();
-                    });
-                    ServerUtil.api('change-web/user/', 'save', data, function () {
-                        //同步更新缓存对应的值
-                        obj.update(data);
-                        // tableReload();
-                        layer.close(index);
-                    });
-                },
-                btn2: function (index, layero) {
-                    //按钮【按钮二】的回调
+        } else if (obj.event === 'del') {
+            layer.confirm('真的删除么', {
+                skin: 'layui-layer-molv'
+            }, function (index) {
+                ServerUtil.api('change-web/operate/', 'delete', {
+                    ids: data.id
+                }, function () {
+                    // obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    tableReload();
                     layer.close(index);
-                },
-                content: $('#tableBox')
+                });
             });
         }
     });
@@ -213,25 +179,44 @@ layui.use(['table'], function () {
     $('#searchBtn').on('click', function () {
         // var type = $(this).data('type');
         var obj = {};
-        var account = $('#accountReload').val();
+        var userAccount = $('#accountReload').val();
         var userName = $('#userNameReload').val();
-        var age = $('#ageReload').val();
-        obj.account = account;
+        obj.userAccount = userAccount;
         obj.userName = userName;
-        obj.age = age;
-        obj.userType = 2;
         tableReload(obj);
+    });
+    //批量删除
+    $('#deleteUsers').on('click', function () {
+        var checkStatus = table.checkStatus('poemUsers'); //获取复选框信息
+        if (checkStatus.data.length == 0) {
+            layer.confirm('请选择要删除的行');
+            return;
+        }
+        var str = '确定删除这' + checkStatus.data.length + '条信息吗';
+        layer.confirm(str, function (index) {
+            var userIdsArr = [];
+            checkStatus.data.forEach(function (val) {
+                userIdsArr.push(val.id);
+            });
+            var userIdsStr = userIdsArr.join(',');
+            ServerUtil.api('change-web/operate/', 'delete', {
+                ids: userIdsStr
+            }, function () {
+                layer.close(index);
+                tableReload();
+            });
+        });
     });
 
     //菜单跳转
     $('#systemUser').on('click', function () {
         window.location.href = window.location.origin + window.location.pathname + '?userType=1';
     });
+    $('#averageUser').on('click', function () {
+        window.location.href = window.location.origin + window.location.pathname + '?userType=2';
+    });
     $('#goosEdit').on('click', function () {
         window.location.href = window.location.origin + window.location.pathname + '?userType=3';
-    });
-    $('#loginLog').on('click', function () {
-        window.location.href = window.location.origin + window.location.pathname + '?userType=4';
     });
     $('#passworkChangeLog').on('click', function () {
         window.location.href = window.location.origin + window.location.pathname + '?userType=5';
