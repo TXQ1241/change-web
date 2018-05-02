@@ -23,6 +23,12 @@
   	<if test="operateType != null and operateType != ''">
   		ol.operate_type = #{operateType}
   	</if>
+  	<if test="userName != null and userName != ''">
+  		ol.user_name = #{userName}
+  	</if>
+  	<if test="account != null and account != ''">
+  		ol.account = #{account}
+  	</if>
   </sql>
   
   <!-- 获取操作日志记录 -->
