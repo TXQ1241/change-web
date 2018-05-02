@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.sycu.lxp.common.Constant;
 import net.sycu.lxp.pojo.User;
+import net.sycu.lxp.service.IOperateLogService;
 import net.sycu.lxp.service.IUserService;
 import net.sycu.lxp.utils.StringUtils;
 import net.sycu.lxp.vo.DataVo;
@@ -31,6 +32,10 @@ public class UserController {
     @Autowired
     @Qualifier("userService")
     IUserService userService;
+    
+    @Autowired
+    @Qualifier("operateService")
+    IOperateLogService operateService;
 
     @RequestMapping("view")
     public String toUserList(String userType){
@@ -179,7 +184,10 @@ public class UserController {
 	    	if (userList != null && userList.size()>0) {
 	    		userInfo = userList.get(0);
 	        	userInfo.setPassword(user.getPassword());
-	        	userService.update(userInfo);
+	        	userService.update(userInfo);	        	
+	        	//保存修改密码日志信息
+	        	operateService.saveLog(userInfo, Constant.OperateConstants.OPERATE_CHANGE_PSW);
+	        	//修改密码成功后清除用户信息
 	        	request.getSession().setAttribute(Constant.CURRENT_USER, null);
 	    	}else {
 	    		status = Constant.AjaxStatus.AJAX_FAIL;

@@ -33,7 +33,7 @@ public class OperateController {
 	 */
 	@RequestMapping("getOperateList")
 	@ResponseBody
-	public DataVo getOperateList(@RequestBody OperateLogVo operateVo) {
+	public DataVo getOperateList(OperateLogVo operateVo) {
 		DataVo dataVo = new DataVo();
         Integer pageNum = operateVo.getPageNum();
         //设置查询开始的条数(就是从哪条开始查询)

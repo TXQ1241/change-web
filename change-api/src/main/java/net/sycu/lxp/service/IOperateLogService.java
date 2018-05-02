@@ -3,6 +3,7 @@ package net.sycu.lxp.service;
 import java.util.List;
 
 import net.sycu.lxp.pojo.OperateLog;
+import net.sycu.lxp.pojo.User;
 import net.sycu.lxp.vo.OperateLogVo;
 
 public interface IOperateLogService {
@@ -32,4 +33,11 @@ public interface IOperateLogService {
 	 * @param operate
 	 */
 	void save(OperateLog operate);
+	
+	/**
+	 * 保存当前用户操作的日志信息
+	 * @param user
+	 */
+	void saveLog(User user, String operateType);
+	
 }

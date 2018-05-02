@@ -12,6 +12,8 @@ public class OperateLog {
     private String userAccount;
 
     private Date operateTime;
+    
+    private String operateTimeStr;
 
     private String operateType;
 
@@ -54,8 +56,16 @@ public class OperateLog {
     public void setOperateTime(Date operateTime) {
         this.operateTime = operateTime;
     }
+    
+    public String getOperateTimeStr() {
+		return operateTimeStr;
+	}
 
-    public String getOperateType() {
+	public void setOperateTimeStr(String operateTimeStr) {
+		this.operateTimeStr = operateTimeStr;
+	}
+
+	public String getOperateType() {
         return operateType;
     }
 

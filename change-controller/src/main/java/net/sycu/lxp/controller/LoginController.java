@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.sycu.lxp.common.Constant;
 import net.sycu.lxp.pojo.User;
+import net.sycu.lxp.service.IOperateLogService;
 import net.sycu.lxp.service.IUserService;
 
 @Controller
@@ -26,6 +27,10 @@ public class LoginController{
     @Autowired
     @Qualifier("userService")
     IUserService userService;
+    
+    @Autowired
+    @Qualifier("operateService")
+    IOperateLogService operateService;
 
     /**
      * 提交测试
@@ -71,8 +76,10 @@ public class LoginController{
                 if (user.getPassword().equals(userInfo.getPassword())){
                     status = Constant.AjaxStatus.AJAX_SUCCESS;
                     message = "登录成功";
+                    //登陆成功后保存登陆日志信息
+                    operateService.saveLog(userInfo, Constant.OperateConstants.OPERATE_LOGIN);
                     //更新用户的登录时间
-                    //userService.update(userInfo);
+                    userService.update(userInfo);
                     //将用户信息放入session域中
                     request.getSession().setAttribute(Constant.CURRENT_USER, userInfo);
                     msgMap.put("userType", userInfo.getUserType());
@@ -148,3 +155,4 @@ public class LoginController{
     }
     
 }
+

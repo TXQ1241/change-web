@@ -107,7 +107,7 @@ layui.use(['table'], function () {
                     title: '账号',
                     // width: 200
                 }, {
-                    field: 'operateTime',
+                    field: 'operateTimeStr',
                     title: '操作时间',
                     // width: 150
                 }, {

@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
-    <result column="operate_time" property="operateTime" jdbcType="DATE" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
     <result column="operate_type" property="operateType" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -16,7 +16,7 @@
     insert into operate_log (id, user_name, user_account, 
       operate_time, operate_type)
     values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userAccount,jdbcType=VARCHAR}, 
-      #{operateTime,jdbcType=DATE}, #{operateType,jdbcType=VARCHAR})
+      #{operateTime,jdbcType=TIMESTAMP}, #{operateType,jdbcType=VARCHAR})
   </insert>
   
   <sql id="Get_Operate_Sql">
@@ -42,7 +42,7 @@
   
   <!-- 获取操作日志记录数 -->
   <select id="getOperateCount" resultType="java.lang.Integer" parameterType="net.sycu.lxp.vo.OperateLogVo">
-  	select * from operate_log ol
+  	select count(*) from operate_log ol
   	<where>
   		<include refid="Get_Operate_Sql"></include>
   	</where>
