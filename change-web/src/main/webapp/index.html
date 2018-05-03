@@ -29,6 +29,14 @@
 		.header .message-r {
 			display: none;
 		}
+
+		.header .message-m {
+			float: left;
+			height: 35px;
+			line-height: 35px;
+			font-size: 14px;
+			margin-left: 20px;
+		}
 	</style>
 </head>
 
@@ -44,6 +52,10 @@
 					</div>
 				</div>
 			</ul>
+			<div class="message-m">
+				<span>当前在线人数：</span>
+				<span class="user_num"></span>
+			</div>
 			<ul class="message-r">
 				<div class="topMessage home">
 					<div class="menu-hd">
@@ -205,12 +217,13 @@
 		ServerUtil.api('change-web/category/', 'getCategory', {}, function (result) {
 			for (var i = 0; i < result.length; i++) {
 				str +=
-					'<li class="appliance js_toggle relative" data-categoryId="' + result[i].id + '"><div class="category-info"><h3 class="category-name b-category-name"><a class="ml-22" title="点心">' +
-						result[i].name + '</a></h3><em>&gt;</em></div><b class="arrow"></b></li>'
+					'<li class="appliance js_toggle relative" data-categoryId="' + result[i].id +
+					'"><div class="category-info"><h3 class="category-name b-category-name"><a class="ml-22" title="点心">' +
+					result[i].name + '</a></h3><em>&gt;</em></div><b class="arrow"></b></li>'
 			}
 			$('.category-list').html(str);
 			$('li.appliance').on('click', function () {
-				window.location.href= window.location.origin + '/change-web/search.html?categoryId=' + $(this)[0].dataset.categoryid;
+				window.location.href = window.location.origin + '/change-web/search.html?categoryId=' + $(this)[0].dataset.categoryid;
 			});
 		});
 
@@ -234,6 +247,13 @@
 			var inputVal = encodeURI($('#searchInput').val() || '');
 			window.location.href = window.location.origin + '/change-web/search.html?goodsName=' + inputVal;
 		});
+
+		setInterval(function () {
+			ServerUtil.api('change-web/login/', 'getLoginPerson', {}, function (result) {
+				$('.user_num').text(result);
+			});
+		}, 1000);
+
 	});
 </script>
 <script type="text/javascript" src="./js/quick_links.js"></script>
