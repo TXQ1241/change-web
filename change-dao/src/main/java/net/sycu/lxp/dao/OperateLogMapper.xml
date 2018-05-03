@@ -21,13 +21,13 @@
   
   <sql id="Get_Operate_Sql">
   	<if test="operateType != null and operateType != ''">
-  		ol.operate_type = #{operateType}
+  		and ol.operate_type = #{operateType}
   	</if>
   	<if test="userName != null and userName != ''">
-  		ol.user_name = #{userName}
+  		and ol.user_name like '%${userName}%'
   	</if>
   	<if test="account != null and account != ''">
-  		ol.account = #{account}
+  		and ol.user_account like '%${account}%'
   	</if>
   </sql>
   
