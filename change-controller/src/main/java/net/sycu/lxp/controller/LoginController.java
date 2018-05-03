@@ -163,7 +163,7 @@ public class LoginController{
     public Integer getLoginPerson(HttpServletRequest request) {
     	Integer loginPerson = (Integer) request.getSession().getAttribute(Constant.LOGIN_PERSON);
     	if(loginPerson == null) {
-    		loginPerson = 0;
+    		loginPerson = 1;
     	}
     	return loginPerson;
     }
