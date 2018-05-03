@@ -84,7 +84,7 @@ public class LoginController{
                     //将当前登录记录数放到session中
                     Integer loginPersons = (Integer) request.getSession().getAttribute(Constant.LOGIN_PERSON);
                     if(loginPersons == null) {
-                    	loginPersons = 0;
+                    	loginPersons = 1;
                     } else {
                     	loginPersons++;
                     }
@@ -135,7 +135,7 @@ public class LoginController{
             if(loginPersons == null) {
             	loginPersons = 0;
             } else {
-            	loginPersons--;
+            	loginPersons-- ;
             }
             request.getSession().setAttribute(Constant.LOGIN_PERSON, loginPersons);
             response.sendRedirect(basePath);
@@ -163,7 +163,7 @@ public class LoginController{
     public Integer getLoginPerson(HttpServletRequest request) {
     	Integer loginPerson = (Integer) request.getSession().getAttribute(Constant.LOGIN_PERSON);
     	if(loginPerson == null) {
-    		loginPerson = 1;
+    		loginPerson = 0;
     	}
     	return loginPerson;
     }
