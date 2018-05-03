@@ -80,7 +80,16 @@ public class LoginController{
                     operateService.saveLog(userInfo, Constant.OperateConstants.OPERATE_LOGIN);
                     //更新用户的登录时间
                     userService.update(userInfo);
-                    //将用户信息放入session域中
+                    
+                    //将当前登录记录数放到session中
+                    Integer loginPersons = (Integer) request.getSession().getAttribute(Constant.LOGIN_PERSON);
+                    if(loginPersons == null) {
+                    	loginPersons = 0;
+                    } else {
+                    	loginPersons++;
+                    }
+                    request.getSession().setAttribute(Constant.LOGIN_PERSON, loginPersons);
+                    //将用户信息放入session域中                    
                     request.getSession().setAttribute(Constant.CURRENT_USER, userInfo);
                     msgMap.put("userType", userInfo.getUserType());
                 } else {
@@ -121,6 +130,14 @@ public class LoginController{
         String basePath = request.getScheme()+"://"+request.getServerName()+":"
                 +request.getServerPort()+path+"/login.html";
         try {
+            //用户登出将用户数量减少
+            Integer loginPersons = (Integer) request.getSession().getAttribute(Constant.LOGIN_PERSON);
+            if(loginPersons == null) {
+            	loginPersons = 0;
+            } else {
+            	loginPersons--;
+            }
+            request.getSession().setAttribute(Constant.LOGIN_PERSON, loginPersons);
             response.sendRedirect(basePath);
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,6 +156,12 @@ public class LoginController{
     @RequestMapping("home")
     public String goToIndex() {
         return "index";
+    }
+    
+    @RequestMapping("getLoginPerson")
+    @ResponseBody
+    public Integer getLoginPerson(HttpServletRequest request) {
+    	return (Integer) request.getSession().getAttribute(Constant.LOGIN_PERSON);
     }
     
     @RequestMapping("loginStatus")

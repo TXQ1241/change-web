@@ -11,7 +11,9 @@ public class Constant {
     public static final String ZERO = "0";
     public static final String ONE = "1";
     public static final Integer ZERO_NUM = 0;
-
+    
+    public static final String LOGIN_PERSON = "loginPerson"; 
+    
     /**
      * 当前用户
      */
