@@ -84,7 +84,7 @@ layui.use(['table'], function () {
             limit: 10
         },
         where: {
-            operateType: '1'
+            operateType: '2'
         },
         page: {
             limits: [5, 10, 20, 50, 100]
