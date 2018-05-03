@@ -161,7 +161,11 @@ public class LoginController{
     @RequestMapping("getLoginPerson")
     @ResponseBody
     public Integer getLoginPerson(HttpServletRequest request) {
-    	return (Integer) request.getSession().getAttribute(Constant.LOGIN_PERSON);
+    	Integer loginPerson = (Integer) request.getSession().getAttribute(Constant.LOGIN_PERSON);
+    	if(loginPerson == null) {
+    		loginPerson = 0;
+    	}
+    	return loginPerson;
     }
     
     @RequestMapping("loginStatus")
