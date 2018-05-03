@@ -218,7 +218,7 @@ layui.use(['table'], function () {
     $('#goosEdit').on('click', function () {
         window.location.href = window.location.origin + window.location.pathname + '?userType=3';
     });
-    $('#passworkChangeLog').on('click', function () {
-        window.location.href = window.location.origin + window.location.pathname + '?userType=5';
+    $('#loginLog').on('click', function () {
+        window.location.href = window.location.origin + window.location.pathname + '?userType=4';
     });
 });
